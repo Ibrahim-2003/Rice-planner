@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <link  rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body style="margin: 0;">
+        <div id="header">
+            <header id="title">Rice Planner - Ibrahim Al-Akash</header>
+        </div>
+
+        <div class="topnav">
+            <a class="active" href="/" style="display: flex; align-items: center; justify-content: center;"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
+            <% for (course of classes) {%>
+                <a href="/course?name=<%= course.name %>" onclick="hideAll()"><%= course.name %></a>
+            <% } %>
+            <a id="add_course" onclick="openCourseForm()" style="display: flex; align-items: center; justify-content: center;cursor: pointer;">
+                <span class="material-icons" style="margin-right: 5px; font-size: 18px;">add_circle_outline</span>
+                  Add Course
+            </a>
+        </div>
+
+        <div id="add_course_form">
+            <div id="x_btn_cont">
+              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeCourseForm()">
+            </div>
+            <form id="formiple" action="/add_course" enctype="multipart/form-data" method="POST">
+              <div style="grid-column: span 2;">
+                <label for="course_name" style="display: block;">Course Name</label>
+                <input name="course_name" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="syllabus">Syllabus</label>
+                <input name="syllabus" style="display: block; margin: 10px;" type="file">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="professor">Professor</label>
+                <input name="professor" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+            </form>
+          </div>
+    
+        <div id="home_rice">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Rice_Owls_logo.svg/1200px-Rice_Owls_logo.svg.png" id="rice_logo">
+        </div>
+        <script src="planner.js"></script>
+        <script src="course.js"></script>
+    </body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <link  rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body style="margin: 0;">
+        <div id="header">
+            <header id="title">Rice Planner - Ibrahim Al-Akash</header>
+        </div>
+
+        <div class="topnav">
+            <a href="/" style="display: flex; align-items: center; justify-content: center;"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
+            <% for (cours of classes) {%>
+                <% if(cours.name == active_course) {%>
+                    <a class="active" href="/course?name=<%= cours.name %>"><%= cours.name %></a>
+                <% }else{ %>  
+                    <a href="/course?name=<%= cours.name %>"><%= cours.name %></a>
+                <% } %> 
+            <% } %>
+            <a id="add_course" onclick="openCourseForm()" style="display: flex; align-items: center; justify-content: center;cursor: pointer;">
+                <span class="material-icons" style="margin-right: 5px; font-size: 18px;">add_circle_outline</span>
+                  Add Course
+            </a>
+        </div>
+
+        
+
+        <div id="add_course_form">
+            <div id="x_btn_cont">
+              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeCourseForm()">
+            </div>
+            <form id="formiple" action="/add_course" enctype="multipart/form-data" method="POST">
+              <div style="grid-column: span 2;">
+                <label for="course_name" style="display: block;">Course Name</label>
+                <input name="course_name" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="syllabus">Syllabus</label>
+                <input name="syllabus" style="display: block; margin: 10px;" type="file">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="professor">Professor</label>
+                <input name="professor" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+            </form>
+          </div>
+
+          <div id="add_reading_form">
+            <div id="x_btn_cont">
+              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeReadingForm()">
+            </div>
+            <form id="formipler" action="/add_reading/<%= course[0].class_id %>-<%= course[0].name %>" method="POST">
+              <div style="grid-column: span 2;">
+                <label for="reading_name" style="display: block;">Reading Name</label>
+                <input name="reading_name" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="link">Link</label>
+                <input name="link" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="date">Due Date</label>
+                <input name="date" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px;font-family: 'SF Pro Display'; font-weight: normal;" type="date">
+              </div>
+              <div style="grid-column: span 2">
+                <label for="description">Description</label>
+                <input name="description" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+            </form>
+          </div>
+
+          <div id="add_assignment_form">
+            <div id="x_btn_cont">
+              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeAssignmentForm()">
+            </div>
+            <form id="formipler" action="/add_assignment/<%= course[0].class_id %>-<%= course[0].name %>" method="POST">
+              <div style="grid-column: span 2;">
+                <label for="assignment_name" style="display: block;">Assignment Name</label>
+                <input name="assignment_name" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="link">Relevent Reading Link</label>
+                <input name="link" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="date">Due Date</label>
+                <input name="date" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px;font-family: 'SF Pro Display'; font-weight: normal;" type="datetime-local">
+              </div>
+              <div style="grid-column: span 2">
+                <label for="description">Description</label>
+                <input name="description" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 2">
+                <label for="assignment_type">Assignment Type</label>
+                <select id="assignment_type" name="assignment_type" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
+                    <option value="problemset">Problem Set</option>
+                    <option value="essays">Essay</option>
+                    <option value="projects">Project</option>
+                </select>
+              </div>
+              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+            </form>
+          </div>
+
+          <div id="<%= active_course %>" class="tabcontent">
+            <div class="inner_tab">
+              <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>info')">Info</button>
+              <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>syllabus')">Syllabus</button>
+              <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>readings')">Readings</button>
+              <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>problems')">Problem Sets</button>
+              <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>projects')">Projects</button>
+              <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>essays')">Essays</button>
+              <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>grade')">Grade</button>
+              <button id="add_course" onclick="deleteCourse('<%= course.class_id %>')" style="display: flex; align-items: center; justify-content: center;">
+                <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">remove_circle_outline</span>
+                Remove Course
+              </button>
+            </div>
+
+            <div id="home_rice_course">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Rice_Owls_logo.svg/1200px-Rice_Owls_logo.svg.png" id="rice_logo">
+            </div>
+
+            <div id='<%= active_course %>info' class="inner_content">
+              <h3>Professor</h3>
+              <p style="text-align: center;"><%= course[0].professor %></p>
+            </div>
+            <div id="<%= active_course %>syllabus" class="inner_content">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <embed src="uploads/<%= course[0].syllabus %>" width="75%" height="700px" style="margin: auto;"/>
+                </div>
+            </div>
+            <div id='<%= active_course %>readings' class="inner_content">
+            <% for (reading of readings) {%>
+            <div class="reading_block">
+                <% if(reading.status != 'complete') {%>
+                    <span class="material-icons" style="font-size: 48px; color: var(--warm-yellow);cursor: pointer;" onclick="markReadingComplete('<%= reading.readings_id %>')">new_releases</span>
+                <% }else{ %>
+                    <span class="material-icons" style="font-size: 48px; color: var(--grass-green);cursor: pointer;" onclick="markReadingIncomplete('<%= reading.readings_id %>')">check_circle_outline</span>
+                <% } %> 
+                <div style="display: block; margin: 10px;">
+                    <h2 style="color: white;"><%= reading.assigned_reading %> </h2>
+                    <h3 style="color: var(--light-gray); font-size: 14px;"><%= reading.due_date.toDateString() %></h3>
+                    <p style="text-align: center; color: var(--bright-blue);"><%= reading.description %> </p>
+                </div>
+                <a style="text-decoration: none; color: var(--bright-green); font-size: 26px; display: flex; align-items: center; justify-content: center;" href="<%= reading.link %> " target="_blank">
+                    <span class="material-icons">book</span>Read
+                </a>
+            </div>
+            <% } %>
+            <div id="add_reading" onclick="openReadingForm()">
+                Add Reading
+            </div>
+            </div>
+
+            <div id='<%= active_course %>problems' class="inner_content">
+                <% for(assignment of assignments){%>
+                    <% if(assignment.assignment_type == 'problemset'){ %>
+                        <div class="reading_block">
+                            <% if(assignment.status != 'complete') {%>
+                                <span class="material-icons" style="font-size: 48px; color: var(--warm-yellow);cursor: pointer;" onclick="markAssignmentComplete('<%= assignment.assignment_id %>')">new_releases</span>
+                            <% }else{ %>
+                                <span class="material-icons" style="font-size: 48px; color: var(--grass-green);cursor: pointer;" onclick="markAssignmentIncomplete('<%= assignment.assignment_id %>')">check_circle_outline</span>
+                            <% } %> 
+                            <div style="display: block; margin: 10px;">
+                                <h2 style="color: white;"><%= assignment.name %> </h2>
+                                <% time = new Date(assignment.due_date) %>
+                                <% time = time.toLocaleString() %>
+                                <h3 style="color: var(--light-gray); font-size: 14px;"><%= time %></h3>
+                                <p style="text-align: center; color: var(--bright-blue);"><%= assignment.description %> </p>
+                            </div>
+                            <a style="text-decoration: none; color: var(--bright-green); font-size: 26px; display: flex; align-items: center; justify-content: center;" href="<%= assignment.link %> " target="_blank">
+                                <span class="material-icons">book</span>Relevant Readings
+                            </a>
+                        </div>
+                    <% } %>  
+                <% } %>
+                <div id="add_reading" onclick="openAssignmentForm()">
+                    Add Assignment
+                </div>
+            </div>
+
+            <div id='<%= active_course %>projects' class="inner_content">
+                <% for(assignment of assignments){%>
+                    <% if(assignment.assignment_type == 'projects'){ %>
+                        <div class="reading_block">
+                            <% if(assignment.status != 'complete') {%>
+                                <span class="material-icons" style="font-size: 48px; color: var(--warm-yellow);cursor: pointer;" onclick="markAssignmentComplete('<%= assignment.assignment_id %>')">new_releases</span>
+                            <% }else{ %>
+                                <span class="material-icons" style="font-size: 48px; color: var(--grass-green);cursor: pointer;" onclick="markAssignmentIncomplete('<%= assignment.assignment_id %>')">check_circle_outline</span>
+                            <% } %> 
+                            <div style="display: block; margin: 10px;">
+                                <h2 style="color: white;"><%= assignment.name %> </h2>
+                                <% time = new Date(assignment.due_date) %>
+                                <% time = time.toLocaleString() %>
+                                <h3 style="color: var(--light-gray); font-size: 14px;"><%= time %></h3>
+                                <p style="text-align: center; color: var(--bright-blue);"><%= assignment.description %> </p>
+                            </div>
+                            <a style="text-decoration: none; color: var(--bright-green); font-size: 26px; display: flex; align-items: center; justify-content: center;" href="<%= assignment.link %> " target="_blank">
+                                <span class="material-icons">book</span>Relevant Readings
+                            </a>
+                        </div>
+                    <% } %>  
+                <% } %>
+                <div id="add_reading" onclick="openAssignmentForm()">
+                    Add Assignment
+                </div>
+            </div>
+
+            <div id='<%= active_course %>essays' class="inner_content">
+                <% for(assignment of assignments){%>
+                    <% if(assignment.assignment_type == 'essays'){ %>
+                        <div class="reading_block">
+                            <% if(assignment.status != 'complete') {%>
+                                <span class="material-icons" style="font-size: 48px; color: var(--warm-yellow);cursor: pointer;" onclick="markAssignmentComplete('<%= assignment.assignment_id %>')">new_releases</span>
+                            <% }else{ %>
+                                <span class="material-icons" style="font-size: 48px; color: var(--grass-green);cursor: pointer;" onclick="markAssignmentIncomplete('<%= assignment.assignment_id %>')">check_circle_outline</span>
+                            <% } %> 
+                            <div style="display: block; margin: 10px;">
+                                <h2 style="color: white;"><%= assignment.name %> </h2>
+                                <% time = new Date(assignment.due_date) %>
+                                <% time = time.toLocaleString() %>
+                                <h3 style="color: var(--light-gray); font-size: 14px;"><%= time %></h3>
+                                <p style="text-align: center; color: var(--bright-blue);"><%= assignment.description %> </p>
+                            </div>
+                            <a style="text-decoration: none; color: var(--bright-green); font-size: 26px; display: flex; align-items: center; justify-content: center;" href="<%= assignment.link %> " target="_blank">
+                                <span class="material-icons">book</span>Relevant Readings
+                            </a>
+                        </div>
+                    <% } %>  
+                <% } %>
+                <div id="add_reading" onclick="openAssignmentForm()">
+                    Add Assignment
+                </div>
+            </div>
+
+            <div id='<%= active_course %>grade' class="inner_content">
+                <div style="display: flex; justify-content: space-evenly; align-items: center;">
+                    <div id="add_reading" onclick="openGradingSchemeForm()">
+                        Add Syllabus Item
+                    </div>
+                    <div id="add_reading" onclick="openGradeAssignmentForm()">
+                        Add Graded Assignment
+                    </div>
+                </div>
+            </div>
+            
+          </div>
+
+
+        <script src="course.js"></script>
+    </body>
+</html>
