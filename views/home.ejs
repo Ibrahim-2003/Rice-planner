@@ -20,6 +20,7 @@
             <% for (course of classes) {%>
                 <a href="/course?name=<%= course.name %>" onclick="hideAll()"><%= course.name %></a>
             <% } %>
+            <a href="/gpa">GPA</a>
             <a id="add_course" onclick="openCourseForm()" style="display: flex; align-items: center; justify-content: center;cursor: pointer;">
                 <span class="material-icons" style="margin-right: 5px; font-size: 18px;">add_circle_outline</span>
                   Add Course
@@ -27,25 +28,29 @@
         </div>
 
         <div id="add_course_form">
-            <div id="x_btn_cont">
-              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeCourseForm()">
-            </div>
-            <form id="formiple" action="/add_course" enctype="multipart/form-data" method="POST">
-              <div style="grid-column: span 2;">
-                <label for="course_name" style="display: block;">Course Name</label>
-                <input name="course_name" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
-              </div>
-              <div style="grid-column: span 1">
-                <label for="syllabus">Syllabus</label>
-                <input name="syllabus" style="display: block; margin: 10px;" type="file">
-              </div>
-              <div style="grid-column: span 1">
-                <label for="professor">Professor</label>
-                <input name="professor" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
-              </div>
-              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
-            </form>
+          <div id="x_btn_cont">
+            <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeCourseForm()">
           </div>
+          <form id="formiple" action="/add_course" enctype="multipart/form-data" method="POST">
+            <div style="grid-column: span 2;">
+              <label for="course_name" style="display: block;">Course Name</label>
+              <input name="course_name" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+            </div>
+            <div style="grid-column: span 1">
+              <label for="hours">Hours</label>
+              <input name="hours" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px; margin-right: 5px;" type="number">
+            </div>
+            <div style="grid-column: span 1">
+              <label for="professor">Professor</label>
+              <input name="professor" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+            </div>
+            <div style="grid-column: span 2">
+              <label for="syllabus">Syllabus</label>
+              <input name="syllabus" style="display: block; margin: 10px;" type="file">
+            </div>
+            <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+          </form>
+        </div>
     
         <div id="home_rice">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Rice_Owls_logo.svg/1200px-Rice_Owls_logo.svg.png" id="rice_logo">

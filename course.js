@@ -58,6 +58,10 @@ function deleteCourse(course_id){
   submitQuery(`/remove_course/${course_id}`);
 }
 
+function archiveCourse(course_id){
+  submitQuery(`/archive_course/${course_id}`);
+}
+
 // function addReading(active_course){
 //     submitQuery(`/add_reading/${active_course}`);
 //   }
@@ -82,6 +86,39 @@ function openAssignmentForm(){
     }
     function closeAssignmentForm(){
     document.getElementById('add_assignment_form').style.display = "none";
+    }
+
+    function openGradeschemeForm(){
+    document.getElementById('add_gradescheme_form').style.display = "flex";
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    }
+    function closeGradeschemeForm(){
+    document.getElementById('add_gradescheme_form').style.display = "none";
+    }
+
+    function openGradedForm(){
+    document.getElementById('add_graded_form').style.display = "flex";
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    }
+    function closeGradedForm(){
+    document.getElementById('add_graded_form').style.display = "none";
+    }
+    
+    function openGPAForm(){
+    document.getElementById('add_gpa_form').style.display = "flex";
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    }
+    function closeGPAForm(){
+    document.getElementById('add_gpa_form').style.display = "none";
     }
 
 function markReadingComplete(reading_id){

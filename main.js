@@ -107,11 +107,23 @@ app.get('/course', async function(req, res) {
     
 })
 
-app.post('/remove_course/:key', async function(req,res){
-    const course_id = req.params.key;
+app.post('/archive_course/:key', async function(req,res){
+    const course_id = req.params.key.split('-')[0];
     const query = `DELETE FROM \`classes\` WHERE class_id=?`;
     const vals = course_id;
     await makeQuery(query,vals);
+    res.redirect('/');
+})
+
+app.post('/remove_course/:key', async function(req,res){
+    const course_id = req.params.key.split('-')[0];
+    const course_name = req.params.key.split('-')[1];
+    const query = `DELETE FROM \`classes\` WHERE class_id=?`;
+    const vals = course_id;
+    await makeQuery(query,vals);
+    const eraseGPA = `DELETE FROM \`gpa\` WHERE class_name=?`;
+    const otherVals = course_name;
+    await makeQuery(eraseGPA,otherVals);
     res.redirect('/');
 })
 
@@ -131,10 +143,26 @@ app.post('/add_course', upload.single('syllabus'), async function(req,res){
           professor: req.body.professor
       }
       await makeQuery(query, vals);
+      const saveGpaQuery = "INSERT INTO gpa SET ?";
+      const values = {hours: parseInt(req.body.hours),
+                        class_name: req.body.course_name};
+      await makeQuery(saveGpaQuery, values);
     res.redirect('/');
     }else{
         res.end("Error, Multer couldn't upload")
     }
+})
+
+app.post('/add_gradescheme/:course_id', async function(req,res){
+    const query = `INSERT INTO gradingscheme SET ?`
+    vals = {
+        class_id: req.params.course_id.split('-')[0],
+        grading_item: req.body.grading_item,
+        weight_points: req.body.weightpts,
+        weight_percntage: req.body.weightperc
+    }
+    await makeQuery(query,vals);
+    res.redirect(`/course?name=${req.params.course_id.split('-')[1]}`);
 })
 
 app.post('/add_reading/:course_id', async function(req,res){
@@ -215,6 +243,15 @@ app.post('/incomplete', async function(req,res){
 
     res.redirect(link);
 
+})
+
+app.get('/gpa', async function(req,res){
+    var classes = await makeQuery('SELECT * FROM classes', '');
+    var assignments = await makeQuery('SELECT * FROM assignments');
+    var readings = await makeQuery('SELECT * FROM readings');
+    res.render('gpa_calc.ejs', {classes: classes,
+                            readings: readings,
+                            assignments: assignments});
 })
 
 

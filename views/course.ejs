@@ -24,6 +24,7 @@
                     <a href="/course?name=<%= cours.name %>"><%= cours.name %></a>
                 <% } %> 
             <% } %>
+            <a href="/gpa">GPA</a>
             <a id="add_course" onclick="openCourseForm()" style="display: flex; align-items: center; justify-content: center;cursor: pointer;">
                 <span class="material-icons" style="margin-right: 5px; font-size: 18px;">add_circle_outline</span>
                   Add Course
@@ -42,12 +43,16 @@
                 <input name="course_name" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
               </div>
               <div style="grid-column: span 1">
-                <label for="syllabus">Syllabus</label>
-                <input name="syllabus" style="display: block; margin: 10px;" type="file">
+                <label for="hours">Hours</label>
+                <input name="hours" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px; margin-right: 5px;" type="number">
               </div>
               <div style="grid-column: span 1">
                 <label for="professor">Professor</label>
                 <input name="professor" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 2">
+                <label for="syllabus">Syllabus</label>
+                <input name="syllabus" style="display: block; margin: 10px;" type="file">
               </div>
               <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
             </form>
@@ -111,6 +116,48 @@
             </form>
           </div>
 
+          <div id="add_gradescheme_form">
+            <div id="x_btn_cont">
+              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeGradeschemeForm()">
+            </div>
+            <form id="formipler" action="/add_gradescheme/<%= course[0].class_id %>-<%= course[0].name %>" method="POST">
+              <div style="grid-column: span 2;">
+                <label for="grading_item" style="display: block;">Grading Item</label>
+                <input name="grading_item" style="display: block; margin: auto; margin-top: 25px; padding: 0; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="weightpts">Weight (points)</label>
+                <input name="weightpts" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="weightperc">Weight (%)</label>
+                <input name="weightperc" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+              </div>
+              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+            </form>
+          </div>
+          
+          <div id="add_graded_form">
+            <div id="x_btn_cont">
+              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeGradedForm()">
+            </div>
+            <form id="formipler" action="/add_gradescheme/<%= course[0].class_id %>-<%= course[0].name %>" method="POST">
+              <div style="grid-column: span 2;">
+                <label for="grading_item" style="display: block;">Grading Item</label>
+                <input name="grading_item" style="display: block; margin: auto; margin-top: 25px; padding: 0; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="weightpts">Weight (points)</label>
+                <input name="weightpts" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="weightperc">Weight (%)</label>
+                <input name="weightperc" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+              </div>
+              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+            </form>
+          </div>
+
           <div id="<%= active_course %>" class="tabcontent">
             <div class="inner_tab">
               <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>info')">Info</button>
@@ -120,7 +167,11 @@
               <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>projects')">Projects</button>
               <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>essays')">Essays</button>
               <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>grade')">Grade</button>
-              <button id="add_course" onclick="deleteCourse('<%= course.class_id %>')" style="display: flex; align-items: center; justify-content: center;">
+              <button id="add_course" onclick="archiveCourse('<%= course[0].class_id %>-<%= course[0].name %>')" style="display: flex; align-items: center; justify-content: center;">
+                <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">archive</span>
+                Archive Course
+              </button>
+              <button id="add_course" onclick="deleteCourse('<%= course[0].class_id %>-<%= course[0].name %>')" style="display: flex; align-items: center; justify-content: center;">
                 <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">remove_circle_outline</span>
                 Remove Course
               </button>
@@ -170,6 +221,15 @@
                                 <span class="material-icons" style="font-size: 48px; color: var(--warm-yellow);cursor: pointer;" onclick="markAssignmentComplete('<%= assignment.assignment_id %>')">new_releases</span>
                             <% }else{ %>
                                 <span class="material-icons" style="font-size: 48px; color: var(--grass-green);cursor: pointer;" onclick="markAssignmentIncomplete('<%= assignment.assignment_id %>')">check_circle_outline</span>
+                                <% if(assignment.grade) {%>
+                                  <div>
+                                    Grade: <%= assignment.grade %>/<%= assignment.maximum %> 
+                                  </div>
+                                <% }else{ %>
+                                  <div>
+                                    Not Yet Graded
+                                  </div>
+                                <% } %>   
                             <% } %> 
                             <div style="display: block; margin: 10px;">
                                 <h2 style="color: white;"><%= assignment.name %> </h2>
@@ -197,6 +257,15 @@
                                 <span class="material-icons" style="font-size: 48px; color: var(--warm-yellow);cursor: pointer;" onclick="markAssignmentComplete('<%= assignment.assignment_id %>')">new_releases</span>
                             <% }else{ %>
                                 <span class="material-icons" style="font-size: 48px; color: var(--grass-green);cursor: pointer;" onclick="markAssignmentIncomplete('<%= assignment.assignment_id %>')">check_circle_outline</span>
+                                <% if(assignment.grade) {%>
+                                  <div>
+                                    Grade: <%= assignment.grade %>/<%= assignment.maximum %> 
+                                  </div>
+                                <% }else{ %>
+                                  <div>
+                                    Not Yet Graded
+                                  </div>
+                                <% } %>   
                             <% } %> 
                             <div style="display: block; margin: 10px;">
                                 <h2 style="color: white;"><%= assignment.name %> </h2>
@@ -224,6 +293,15 @@
                                 <span class="material-icons" style="font-size: 48px; color: var(--warm-yellow);cursor: pointer;" onclick="markAssignmentComplete('<%= assignment.assignment_id %>')">new_releases</span>
                             <% }else{ %>
                                 <span class="material-icons" style="font-size: 48px; color: var(--grass-green);cursor: pointer;" onclick="markAssignmentIncomplete('<%= assignment.assignment_id %>')">check_circle_outline</span>
+                                <% if(assignment.grade) {%>
+                                  <div>
+                                    Grade: <%= assignment.grade %>/<%= assignment.maximum %> 
+                                  </div>
+                                <% }else{ %>
+                                  <div>
+                                    Not Yet Graded
+                                  </div>
+                                <% } %>   
                             <% } %> 
                             <div style="display: block; margin: 10px;">
                                 <h2 style="color: white;"><%= assignment.name %> </h2>
@@ -245,10 +323,10 @@
 
             <div id='<%= active_course %>grade' class="inner_content">
                 <div style="display: flex; justify-content: space-evenly; align-items: center;">
-                    <div id="add_reading" onclick="openGradingSchemeForm()">
+                    <div id="add_reading" onclick="openGradeschemeForm()">
                         Add Syllabus Item
                     </div>
-                    <div id="add_reading" onclick="openGradeAssignmentForm()">
+                    <div id="add_reading" onclick="openGradedForm()">
                         Add Graded Assignment
                     </div>
                 </div>
