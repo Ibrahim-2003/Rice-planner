@@ -8,6 +8,14 @@ const mysql = require("mysql");
 var bodyParser = require('body-parser');
 const { append } = require('express/lib/response');
 
+const sample_account = {
+    account_id: 1,
+    name: 'Ibrahim',
+    graduation: 2025,
+    major: 'Bioengineering',
+    minor: 'Data Science, Engineering Design'
+}
+
 
 const gpa_scale = {
     'A+': 4.0,
@@ -181,7 +189,8 @@ app.post('/add_course', upload.single('syllabus'), async function(req,res){
       const vals = {
           name: req.body.course_name,
           syllabus: fileName,
-          professor: req.body.professor
+          professor: req.body.professor,
+          semester: req.body.semester
       }
       await makeQuery(query, vals);
       const saveGpaQuery = "INSERT INTO gpa SET ?";
@@ -384,6 +393,108 @@ app.get('/gpa', async function(req,res){
     }
     var amcas_grade = amcas_sum / amcas_grades.length;
 
+    f21_qp = 0;
+    f21_hours = 0;
+    s22_qp = 0;
+    s22_hours = 0;
+    f22_qp = 0;
+    f22_hours = 0;
+    s23_qp = 0;
+    s23_hours = 0;
+    f23_qp = 0;
+    f23_hours = 0;
+    s24_qp = 0;
+    s24_hours = 0;
+    f24_qp = 0;
+    f24_hours = 0;
+    s25_qp = 0;
+    s25_hours = 0;
+
+    for (x of cum){
+        switch (x.semester) {
+            case 'F21':
+                f21_qp = f21_qp + x.quality_points;
+                f21_hours = f21_hours + x.hours;
+                break;
+            case 'S22':
+                s22_qp = s22_qp + x.quality_points;
+                s22_hours = s22_hours + x.hours;
+                break;
+            case 'F22':
+                f22_qp = f22_qp + x.quality_points;
+                f22_hours = f22_hours + x.hours;
+                break;
+            case 'S23':
+                s23_qp = s23_qp + x.quality_points;
+                s23_hours = s23_hours + x.hours;
+                break;
+            case 'F23':
+                f23_qp = f23_qp + x.quality_points;
+                f23_hours = f23_hours + x.hours;
+                break;
+            case 'S24':
+                s24_qp = s24_qp + x.quality_points;
+                s24_hours = s24_hours + x.hours;
+                break;
+            case 'F24':
+                f24_qp = f24_qp + x.quality_points;
+                f24_hours = f24_hours + x.hours;
+                break;
+            case 'S25':
+                s25_qp = s25_qp + x.quality_points;
+                s25_hours = s25_hours + x.hours;
+                break;
+            default:
+                break;
+        }
+    }
+
+    sem_gpas = [
+        {
+            semester: 'F21',
+            gpa: f21_qp / f21_hours
+        },
+        {
+            semester: 'S22',
+            gpa: s22_qp / s22_hours
+        },
+        {
+            semester: 'F22',
+            gpa: f22_qp / f22_hours
+        },
+        {
+            semester: 'S23',
+            gpa: s23_qp / s23_hours
+        },
+        {
+            semester: 'F23',
+            gpa: f23_qp / f23_hours
+        },
+        {
+            semester: 'S24',
+            gpa: s24_qp / s24_hours
+        },
+        {
+            semester: 'F24',
+            gpa: f24_qp / f24_hours
+        },
+        {
+            semester: 'S25',
+            gpa: s25_qp / s25_hours
+        }
+    ]
+
+    prev_gpa = [];
+
+    for (x of sem_gpas){
+        if(x.gpa > 0){
+            prev_gpa.push(x.gpa);
+        }
+    }
+
+    var trend = prev_gpa[prev_gpa.length - 1]-prev_gpa[0];
+
+
     var gradingscheme = await makeQuery('SELECT * FROM gradingscheme');
     var graded = await makeQuery('SELECT * FROM graded_assignments');
     res.render('gpa_calc.ejs', {classes: classes,
@@ -397,7 +508,9 @@ app.get('/gpa', async function(req,res){
                             current_hours: current_hours,
                             average: average,
                             tmdsas_grade: tmdsas_grade,
-                            amcas_grade: amcas_grade});
+                            amcas_grade: amcas_grade,
+                            sem_gpas: sem_gpas,
+                            trend: trend});
 })
 
 app.post('/add_course_gpa', async function(req,res){
@@ -410,7 +523,8 @@ app.post('/add_course_gpa', async function(req,res){
         class_name: course_name,
         letter: letter_grade,
         hours: hours,
-        quality_points: quality_points
+        quality_points: quality_points,
+        semester: req.body.gpa_semester
     }
     makeQuery(query, vals);
     res.redirect('/gpa')

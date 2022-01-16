@@ -8,6 +8,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css">
         <link  rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <!-- <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+        </script> -->
+        <script src="https://cdn.plot.ly/plotly-2.8.3.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js'></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body style="margin: 0;">
@@ -48,6 +53,19 @@
                 <label for="syllabus">Syllabus</label>
                 <input name="syllabus" style="display: block; margin: 10px;" type="file">
               </div>
+              <div style="grid-column: span 2">
+                <label for="semester">Semester</label>
+                <select id="semester" name="semester" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
+                  <option value="F21">Fall '21</option>
+                  <option value="S22">Spring '22</option>
+                  <option value="F22">Fall '22</option>
+                  <option value="S23">Spring '23</option>
+                  <option value="F23">Fall '23</option>
+                  <option value="S24">Spring '24</option>
+                  <option value="F24">Fall '24</option>
+                  <option value="S25">Spring '25</option>
+                </select>
+              </div>
               <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
             </form>
           </div>
@@ -79,6 +97,19 @@
                     <option value="C-">C-</option>
                 </select>
               </div>
+              <div style="grid-column: span 2">
+                <label for="gpa_semester">Semester</label>
+                <select id="gpa_semester" name="gpa_semester" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
+                  <option value="F21">Fall '21</option>
+                  <option value="S22">Spring '22</option>
+                  <option value="F22">Fall '22</option>
+                  <option value="S23">Spring '23</option>
+                  <option value="F23">Fall '23</option>
+                  <option value="S24">Spring '24</option>
+                  <option value="F24">Fall '24</option>
+                  <option value="S25">Spring '25</option>
+                </select>
+              </div>
               <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
             </form>
           </div>
@@ -86,8 +117,12 @@
           <div class="tabcontent">
             <div class="inner_tab">
                 <button class="inner_tablinks" onclick="openInnerCity(event, `cum`)" style="display: flex; align-items: center; justify-content: center;">
-                  <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">timeline</span>
+                  <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">assessment</span>
                   Cumulative GPA
+                </button>
+                <button class="inner_tablinks" onclick="openInnerCity(event, `sem`)" style="display: flex; align-items: center; justify-content: center;">
+                  <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">timeline</span>
+                  Semester GPA
                 </button>
                 <button class="inner_tablinks" onclick="openInnerCity(event, `med`)" style="display: flex; align-items: center; justify-content: center;">
                   <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">school</span>
@@ -147,9 +182,9 @@
         </div>
         <div id="cum" class="inner_content" style="align-items: center; justify-content: center; margin: 0; padding: 0;">
             <div id="gpa_table_cont">
-                <table class="gpa_table">
+                <table class="gpa_table" id="cum_table">
                     <tr>
-                        <th colspan="4">Cumulative GPA</th>
+                        <th colspan="4">Cumulative GPA <span class="material-icons" style="margin:auto; margin-left: 5px; font-size: 18px; align-self: center; cursor: pointer;" onclick="window.print();return false;">print</span></th>
                     </tr>
                     <tr style="font-style: italic; font-weight: 900;border-top: 1px solid var(--rice-blue); border-bottom: 1px solid var(--rice-blue); padding: 10px 0;">
                         <td>
@@ -244,7 +279,7 @@
                     </tr>
                     <tr style="color: var(--bright-blue);">
                         <td>
-                            <%= current_hours %> 
+                            <%= current_hours - tot_hours %> 
                         </td>
                         <td>
                             <%= classes.length %>
@@ -255,11 +290,41 @@
         </div>
         </div>
 
+        <div id="semester_chart_data" style="display: none;">
+            <% for (x of sem_gpas) {%>
+                <%= x.semester %>,<%= x.gpa %>-
+            <% } %>  
+        </div>
+        <div id="sem" class="inner_content">
+            <div style=" display: flex; align-items: center; justify-content: center;">
+                <div id="semester_chart" style="width:100%;max-width:700px;"></div>
+            </div>
+            <div id="semester_trend">
+                <% if (trend > 0) {%>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 38px; align-self: center; color: var(--grass-green);">trending_up</span>
+                        <span style="color: var(--grass-green);">Upward Trend</span>
+                    </div>
+                <% }else if(trend == 0){ %>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 38px; align-self: center; color: var(--warm-yellow);">stacked_line_chart</span>
+                        <span style="color: var(--warm-yellow);">Stagnant Trend</span>
+                    </div>  
+                <% }else{ %>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 38px; align-self: center; color: #e30b0b;">trending_down</span>
+                        <span style="color: #e30b0b;">Downward Trend</span>
+                    </div>
+                <% } %>   
+            </div>
+        </div>
+
         <div id="add_reading" onclick="openGPAForm()">
             Add Class GPA
         </div>
 
 
         <script src="gpacalc.js"></script>
+        <script src="charter.js"></script>
     </body>
 </html>

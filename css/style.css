@@ -209,7 +209,7 @@ body{
     font-size: 20px;
     margin: auto;
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 50vw;
@@ -320,8 +320,14 @@ body{
     display: grid;
     grid-template-columns: 1fr 1fr;
     text-align: center;
+    margin: 1px;
   }
   #formipler{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+  }
+  .formipler{
     display: grid;
     grid-template-columns: 1fr 1fr;
     text-align: center;
@@ -544,4 +550,13 @@ table{
 td{
   word-wrap:break-word;
   width: 150px;
+}
+
+#semester_trend{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
 }

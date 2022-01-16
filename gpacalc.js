@@ -16,7 +16,12 @@ function openInnerCity(evt, cityName) {
     }
 
     // Show the current tab, and add an "active" class to the button that opened the tab
+    if(cityName == 'sem'){
+    document.getElementById(cityName).style.display = "block";
+    }else{
+      
     document.getElementById(cityName).style.display = "flex";
+    }
     evt.currentTarget.className += " active";
   }
 
@@ -30,3 +35,21 @@ function openInnerCity(evt, cityName) {
     function closeGPAForm(){
     document.getElementById('add_gpa_form').style.display = "none";
     }
+
+    function openCourseForm(){
+      document.getElementById('add_course_form').style.display = "flex";
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      }
+      function closeCourseForm(){
+      document.getElementById('add_course_form').style.display = "none";
+      }
+
+      function pdf(){
+        var doc = new jsPDF();
+        doc.autoTable("#cum_table");
+        doc.save("table.pdf");
+      }
+      

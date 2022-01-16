@@ -54,6 +54,19 @@
                 <label for="syllabus">Syllabus</label>
                 <input name="syllabus" style="display: block; margin: 10px;" type="file">
               </div>
+              <div style="grid-column: span 2">
+                <label for="semester">Semester</label>
+                <select id="semester" name="semester" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
+                  <option value="F21">Fall '21</option>
+                  <option value="S22">Spring '22</option>
+                  <option value="F22">Fall '22</option>
+                  <option value="S23">Spring '23</option>
+                  <option value="F23">Fall '23</option>
+                  <option value="S24">Spring '24</option>
+                  <option value="F24">Fall '24</option>
+                  <option value="S25">Spring '25</option>
+                </select>
+              </div>
               <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
             </form>
           </div>
@@ -166,7 +179,7 @@
                 <label for="grading_type" style="display: block;">Assignment Type</label>
                 <select id="grading_type" name="grading_type" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
                   <% for (x of syllabus) {%>
-                    <option style="font-size: 14px; word-wrap: break-word;" value="<%= x?.type %>-<%= x?.grading_id %>"><%= x?.grading_item %> </option>
+                    <option style="font-size: 14px; word-wrap: break-word;" value="<%= x?.grading_item %>-<%= x?.grading_id %>"><%= x?.grading_item %> </option>
                   <% } %>
               </select>
               </div>
@@ -200,8 +213,17 @@
 
             <div id='<%= active_course %>info' class="inner_content">
               <h3>Professor</h3>
-              <p style="text-align: center;"><%= course[0].professor %></p>
+              <p style="text-align: center;"><%= course[0].professor %></p><br>
+              <h3>Semester</h3>
+              <p style="text-align: center;">
+                <% if(course[0].semester[0] == 'F') {%> 
+                  Fall '<%= course[0].semester[1] %><%= course[0].semester[2] %>
+                <% }else{ %>
+                  Spring '<%= course[0].semester[1] %><%= course[0].semester[2] %>
+                <% } %> 
+              </p>
             </div>
+
             <div id="<%= active_course %>syllabus" class="inner_content">
                 <div style="display: flex; align-items: center; justify-content: center;">
                     <embed src="uploads/<%= course[0].syllabus %>" width="75%" height="700px" style="margin: auto;"/>
