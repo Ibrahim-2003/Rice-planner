@@ -25,6 +25,7 @@
   function openInnerCity(evt, cityName) {
     // Declare all variables
     var i, tabcontent, tablinks;
+    console.log(cityName);
 
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("inner_content");

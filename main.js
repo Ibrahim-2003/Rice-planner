@@ -6,7 +6,44 @@ const util = require('util');
 const { join, resolve } = require("path");
 const mysql = require("mysql");
 var bodyParser = require('body-parser');
+const { append } = require('express/lib/response');
 
+
+const gpa_scale = {
+    'A+': 4.0,
+    'A': 4.0,
+    'A-': 3.6667,
+    'B+': 3.3333,
+    'B': 3.0,
+    'B-': 2.6667,
+    'C+': 2.3333,
+    'C': 2.0,
+    'C-': 1.6667
+}
+
+const tmdas_scale = {
+    'A+': 4.0,
+    'A': 4.0,
+    'A-': 4.0,
+    'B+': 3.0,
+    'B': 3.0,
+    'B-': 3.0,
+    'C+': 2.0,
+    'C': 2.0,
+    'C-': 2.0
+}
+
+const amcas_scale = {
+    'A+': 4.0,
+    'A': 4.0,
+    'A-': 3.7,
+    'B+': 3.3,
+    'B': 3.0,
+    'B-': 2.7,
+    'C+': 2.3,
+    'C': 2.0,
+    'C-': 1.7
+}
 
 
 // Set storage engine
@@ -96,11 +133,15 @@ app.get('/course', async function(req, res) {
         var assignments = await makeQuery('SELECT * FROM assignments WHERE class_id=? ORDER BY status DESC, due_date ASC', `${course_id}`);
         var readings = await makeQuery('SELECT * FROM readings WHERE class_id=? ORDER BY status DESC, due_date ASC', `${course_id}`);
         // console.log(readings)
+        var gradingscheme = await makeQuery('SELECT * FROM gradingscheme WHERE class_id=?', `${course_id}`);
+        var graded = await makeQuery('SELECT * FROM graded_assignments');
         res.render('course.ejs', {classes: classes,
                                     active_course: req.query.name,
                                     course: blip,
                                     assignments: assignments,
-                                    readings: readings});
+                                    readings: readings,
+                                    syllabus: gradingscheme,
+                                    graded: graded});
     } catch (e) {
         console.error(e);
     }
@@ -155,14 +196,49 @@ app.post('/add_course', upload.single('syllabus'), async function(req,res){
 
 app.post('/add_gradescheme/:course_id', async function(req,res){
     const query = `INSERT INTO gradingscheme SET ?`
+    if(!req.body.weightpts){
+        weight_points = 0;
+    }else{
+        weight_points = req.body.weightpts;
+    }
+    if(!req.body.weightperc){
+        weightperc = 0
+    }else{
+        weightperc = req.body.weightperc
+    }
     vals = {
         class_id: req.params.course_id.split('-')[0],
         grading_item: req.body.grading_item,
-        weight_points: req.body.weightpts,
-        weight_percntage: req.body.weightperc
+        weight_points: weight_points,
+        weight_percentage: weightperc
     }
     await makeQuery(query,vals);
     res.redirect(`/course?name=${req.params.course_id.split('-')[1]}`);
+})
+
+app.post('/add_graded/:course_id', async function(req,res){
+    const course_id = req.params.course_id.split('-')[0];
+    const course_name = req.params.course_id.split('-')[1];
+    const grading_type = req.body.grading_type.split('-')[0];
+    const grading_id = req.body.grading_type.split('-')[1];
+    const assignment_name = req.body.graded_assignment_name.split('-')[0];
+    const assignment_id = req.body.graded_assignment_name.split('-')[1];
+    const score = req.body.score;
+    const max = req.body.max_score;
+    var query = `INSERT INTO graded_assignments SET ?`;
+    var vals ={
+        grading_id: grading_id,
+        assignment_id: assignment_id,
+        grade: score,
+        maximum: max,
+        type: grading_type
+    };
+
+    await makeQuery(query, vals);
+    var query = `UPDATE assignments SET maximum=?, grade=? WHERE assignment_id=?`;
+    var vals = [max,score,assignment_id];
+    await makeQuery(query, vals);
+    res.redirect(`/course?name=${course_name}`);
 })
 
 app.post('/add_reading/:course_id', async function(req,res){
@@ -248,11 +324,104 @@ app.post('/incomplete', async function(req,res){
 
 app.get('/gpa', async function(req,res){
     var classes = await makeQuery('SELECT * FROM classes');
+    var temp = []
+    var cum = await makeQuery('SELECT * FROM gpa');
+    for (c of cum){
+        for (x of classes){
+            if(x.name == c.class_name){
+                temp.push(c);
+            }
+        }
+    }
+    var sem = temp;
+    
+
+    var cum_quality_points = 0;
+    var tot_hours = 0;
+    var current_hours = 0;
+    for(x of cum){
+        if(x.quality_points > 0){
+            cum_quality_points = cum_quality_points + x.quality_points;
+            tot_hours = tot_hours + x.hours;
+            current_hours = current_hours + x.hours;
+        }else{
+            current_hours = current_hours + x.hours;
+        }
+    }
+    var gpa = cum_quality_points/tot_hours;
+    var tos = [];
+    const scale = [4, 3.66, 3.33, 3, 2.66, 2.33, 2];
+    const scalel = ['A+/A', 'A-', 'B+', 'B', 'B-', 'C+', 'C'];
+    for(x of scale){
+        tos.push(gpa-x);
+    }
+    var sorted = tos.sort();
+    for(x of scale){
+        if(gpa-x == sorted[0]){
+            average = scalel[scale.findIndex(c => c==x)];
+        }
+    }
+
+    var tmdsas_grades = [];
+    var tmdas_sum = 0;
+    for(r of cum){
+        if(r.letter != null){
+            tmdsas_grades.push(tmdas_scale[r.letter]);
+            tmdas_sum = tmdas_sum + tmdas_scale[r.letter];
+            
+        }
+    }
+    var tmdsas_grade = tmdas_sum / tmdsas_grades.length;
+
+    var amcas_grades = [];
+    var amcas_sum = 0;
+    for(r of cum){
+        if(r.letter != null){
+            amcas_grades.push(amcas_scale[r.letter]);
+            amcas_sum = amcas_sum + amcas_scale[r.letter];
+            
+        }
+    }
+    var amcas_grade = amcas_sum / amcas_grades.length;
+
     var gradingscheme = await makeQuery('SELECT * FROM gradingscheme');
     var graded = await makeQuery('SELECT * FROM graded_assignments');
     res.render('gpa_calc.ejs', {classes: classes,
                             guidelines: gradingscheme,
-                            graded: graded});
+                            graded: graded,
+                            cum: cum,
+                            sem: sem,
+                            gpa: gpa,
+                            tot_hours: tot_hours,
+                            cum_quality_points: cum_quality_points,
+                            current_hours: current_hours,
+                            average: average,
+                            tmdsas_grade: tmdsas_grade,
+                            amcas_grade: amcas_grade});
+})
+
+app.post('/add_course_gpa', async function(req,res){
+    const course_name = req.body.course_name;
+    const hours = req.body.hours;
+    const letter_grade = req.body.grade;
+    const quality_points = gpa_scale[letter_grade] * hours;
+    const query = 'INSERT INTO gpa SET ?';
+    const vals = {
+        class_name: course_name,
+        letter: letter_grade,
+        hours: hours,
+        quality_points: quality_points
+    }
+    makeQuery(query, vals);
+    res.redirect('/gpa')
+})
+
+app.get('/admin', (req,res) => {
+    res.render('admin.ejs');
+})
+
+app.post('/add_coursedb', async function(req,res){
+    const course_name = req.body.course_name;
 })
 
 

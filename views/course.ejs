@@ -110,6 +110,7 @@
                     <option value="problemset">Problem Set</option>
                     <option value="essays">Essay</option>
                     <option value="projects">Project</option>
+                    <option value="other">Other</option>
                 </select>
               </div>
               <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
@@ -141,18 +142,33 @@
             <div id="x_btn_cont">
               <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeGradedForm()">
             </div>
-            <form id="formipler" action="/add_gradescheme/<%= course[0].class_id %>-<%= course[0].name %>" method="POST">
-              <div style="grid-column: span 2;">
-                <label for="grading_item" style="display: block;">Grading Item</label>
-                <input name="grading_item" style="display: block; margin: auto; margin-top: 25px; padding: 0; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+            <form id="formipler" style="margin: 1px;" action="/add_graded/<%= course[0].class_id %>-<%= course[0].name %>" method="POST">
+              <div style="grid-column: span 1">
+                <label for="score">Score</label>
+                <input name="score" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; margin-right: 5px; font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
               </div>
               <div style="grid-column: span 1">
-                <label for="weightpts">Weight (points)</label>
-                <input name="weightpts" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+                <label for="max_score">Max Score</label>
+                <input name="max_score" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; margin-left: 5px; font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
               </div>
-              <div style="grid-column: span 1">
-                <label for="weightperc">Weight (%)</label>
-                <input name="weightperc" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+              <div style="grid-column: span 2">
+                <label for="graded_assignment_name" style="display: block;">Assignment</label>
+                <select id="graded_assignment_name" name="graded_assignment_name" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
+                  <% for (x of assignments) {%>
+                    <% if( x.grade > 0) {%>
+                    <% }else {%>  
+                    <option style="font-size: 14px; word-wrap: break-word;" value="<%= x.name %>-<%= x.assignment_id %> "><%= x.name %> </option>
+                    <% } %> 
+                  <% } %>
+              </select>
+              </div>
+              <div style="grid-column: span 2">
+                <label for="grading_type" style="display: block;">Assignment Type</label>
+                <select id="grading_type" name="grading_type" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
+                  <% for (x of syllabus) {%>
+                    <option style="font-size: 14px; word-wrap: break-word;" value="<%= x?.type %>-<%= x?.grading_id %>"><%= x?.grading_item %> </option>
+                  <% } %>
+              </select>
               </div>
               <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
             </form>
@@ -166,6 +182,7 @@
               <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>problems')">Problem Sets</button>
               <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>projects')">Projects</button>
               <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>essays')">Essays</button>
+              <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>other')">Other</button>
               <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>grade')">Grade</button>
               <button id="add_course" onclick="archiveCourse('<%= course[0].class_id %>-<%= course[0].name %>')" style="display: flex; align-items: center; justify-content: center;">
                 <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">archive</span>
@@ -216,6 +233,42 @@
             <div id='<%= active_course %>problems' class="inner_content">
                 <% for(assignment of assignments){%>
                     <% if(assignment.assignment_type == 'problemset'){ %>
+                        <div class="reading_block">
+                            <% if(assignment.status != 'complete') {%>
+                                <span class="material-icons" style="font-size: 48px; color: var(--warm-yellow);cursor: pointer;" onclick="markAssignmentComplete('<%= assignment.assignment_id %>')">new_releases</span>
+                            <% }else{ %>
+                                <span class="material-icons" style="font-size: 48px; color: var(--grass-green);cursor: pointer;" onclick="markAssignmentIncomplete('<%= assignment.assignment_id %>')">check_circle_outline</span>
+                                <% if(assignment.grade) {%>
+                                  <div>
+                                    Grade: <%= assignment.grade %>/<%= assignment.maximum %> 
+                                  </div>
+                                <% }else{ %>
+                                  <div>
+                                    Not Yet Graded
+                                  </div>
+                                <% } %>   
+                            <% } %> 
+                            <div style="display: block; margin: 10px;">
+                                <h2 style="color: white;"><%= assignment.name %> </h2>
+                                <% time = new Date(assignment.due_date) %>
+                                <% time = time.toLocaleString() %>
+                                <h3 style="color: var(--light-gray); font-size: 14px;"><%= time %></h3>
+                                <p style="text-align: center; color: var(--bright-blue);"><%= assignment.description %> </p>
+                            </div>
+                            <a style="text-decoration: none; color: var(--bright-green); font-size: 26px; display: flex; align-items: center; justify-content: center;" href="<%= assignment.link %> " target="_blank">
+                                <span class="material-icons">book</span>Relevant Readings
+                            </a>
+                        </div>
+                    <% } %>  
+                <% } %>
+                <div id="add_reading" onclick="openAssignmentForm()">
+                    Add Assignment
+                </div>
+            </div>
+            
+            <div id='<%= active_course %>other' class="inner_content">
+                <% for(assignment of assignments){%>
+                    <% if(assignment.assignment_type == 'other'){ %>
                         <div class="reading_block">
                             <% if(assignment.status != 'complete') {%>
                                 <span class="material-icons" style="font-size: 48px; color: var(--warm-yellow);cursor: pointer;" onclick="markAssignmentComplete('<%= assignment.assignment_id %>')">new_releases</span>

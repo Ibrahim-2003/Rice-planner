@@ -56,36 +56,210 @@
             <div id="x_btn_cont">
               <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeGPAForm()">
             </div>
-            <form id="formipler" action="/add_gradescheme/fsfds" method="POST">
+            <form id="formipler" action="/add_course_gpa" method="POST">
               <div style="grid-column: span 2;">
-                <label for="grading_item" style="display: block;">Grading Item</label>
-                <input name="grading_item" style="display: block; margin: auto; margin-top: 25px; padding: 0; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+                <label for="course_name" style="display: block;">Course Name</label>
+                <input name="course_name" style="display: block; margin: auto; margin-top: 25px; padding: 0; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
               </div>
               <div style="grid-column: span 1">
-                <label for="weightpts">Weight (points)</label>
-                <input name="weightpts" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+                <label for="hours">Hours</label>
+                <input name="hours" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
               </div>
               <div style="grid-column: span 1">
-                <label for="weightperc">Weight (%)</label>
-                <input name="weightperc" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+                <label for="grade">Letter Grade</label>
+                <select id="grade" name="grade" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 18px;">
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="B-">B-</option>
+                    <option value="C+">C+</option>
+                    <option value="C">C</option>
+                    <option value="C-">C-</option>
+                </select>
               </div>
               <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
             </form>
           </div>
-    
-        
-          <div id="gpa_table_cont">
-            <table id="gpa_table">
-                <th>GPA</th>
-            </table>
+
+          <div class="tabcontent">
+            <div class="inner_tab">
+                <button class="inner_tablinks" onclick="openInnerCity(event, `cum`)" style="display: flex; align-items: center; justify-content: center;">
+                  <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">timeline</span>
+                  Cumulative GPA
+                </button>
+                <button class="inner_tablinks" onclick="openInnerCity(event, `med`)" style="display: flex; align-items: center; justify-content: center;">
+                  <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">school</span>
+                  Medical GPA
+                </button>
+              </div>
           </div>
+          
+    
+        <div id="med" class="inner_content" style="align-items: center; justify-content: center; margin: 0; padding: 0;">
+            <div id="gpa_table_cont" style="margin-right: 25px;">
+                <table class="med_table">
+                    <tr>
+                        <th>AMCAS GPA</th>
+                    </tr>
+                    <tr style="font-style: italic; font-weight: 900;border-top: 1px solid var(--rice-blue); border-bottom: 1px solid var(--rice-blue); padding: 10px 0;">
+                        <td>
+                            Overall
+                        </td>
+                        <td>
+                            BCMP
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= amcas_grade.toFixed(4) %> 
+                        </td>
+                        <td>
+                            <%= amcas_grade.toFixed(4) %> 
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="gpa_table_cont" style="margin-left: 25px;">
+                <table class="med_table">
+                    <tr>
+                        <th colspan="4">TMDSAS GPA</th>
+                    </tr>
+                    <tr style="font-style: italic; font-weight: 900;border-top: 1px solid var(--rice-blue); border-bottom: 1px solid var(--rice-blue); padding: 10px 0;">
+                        <td>
+                            Overall
+                        </td>
+                        <td>
+                            BCMP
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= tmdsas_grade.toFixed(4) %> 
+                        </td>
+                        <td>
+                            <%= tmdsas_grade.toFixed(4) %> 
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="cum" class="inner_content" style="align-items: center; justify-content: center; margin: 0; padding: 0;">
+            <div id="gpa_table_cont">
+                <table class="gpa_table">
+                    <tr>
+                        <th colspan="4">Cumulative GPA</th>
+                    </tr>
+                    <tr style="font-style: italic; font-weight: 900;border-top: 1px solid var(--rice-blue); border-bottom: 1px solid var(--rice-blue); padding: 10px 0;">
+                        <td>
+                            Course
+                        </td>
+                        <td>
+                            Hours
+                        </td>
+                        <td>
+                            Letter Grade
+                        </td>
+                        <td>
+                            Quality Points
+                        </td>
+                    </tr>
+                    <% for(course of cum) {%>
+                        <tr>
+                            <td>
+                                <%= course.class_name %> 
+                            </td>
+                            <td>
+                                <%= course.hours %> 
+                            </td>
+                            <td>
+                                <% if(course.letter != null) {%> 
+                                    <%= course.letter %>
+                                    <% }else {%>
+                                        ---
+                                    <% } %>  
+                            </td>
+                            <td>
+                                <% if(course.quality_points > 0) {%> 
+                                    <%= course.quality_points.toFixed(4) %>
+                                    <% }else {%>
+                                        ---
+                                    <% } %>   
+                            </td>
+                        </tr>
+                    <% } %>
+                    <tr style="border-top: 1px solid var(--rice-blue); border-bottom: 1px solid var(--rice-blue); padding: 10px 0;">
+                        <td>
+                            <%= cum.length %> Courses 
+                        </td>
+                        <td>
+                            <%= current_hours %> Hours
+                        </td>
+                        <td>
+                            (<%= average %>)  Average
+                        </td>
+                        <td>
+                            <%= cum_quality_points.toFixed(4) %>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="gpa_summary_table_cont">
+                <table class="gpa_summary_table">
+                    <tr>
+                        <th colspan="2" style="color: var(--warm-yellow); font-size: 26px; padding-bottom: 1rem;">Summary</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="color: var(--warm-yellow); border-bottom: 1px solid var(--warm-yellow);">Cumulative</th>
+                    </tr>
+                    <tr style="font-style: italic; font-weight: 900; color: var(--bright-blue);">
+                        <td>
+                            GPA
+                        </td>
+                        <td>
+                            Hours
+                        </td>
+                    </tr>
+                    <tr style="color: var(--bright-blue);">
+                        <td>
+                            <%= gpa.toFixed(4) %> 
+                        </td>
+                        <td>
+                            <%= tot_hours %> 
+                        </td>
+                    </tr>
+                    <tr style="color: var(--warm-yellow);">
+                        <th style="border-bottom: 1px solid var(--warm-yellow); padding-top: 15px;" colspan="2">
+                            Current Semester
+                        </th>
+                    </tr>
+                    <tr style="font-style: italic; font-weight: 900; color: var(--bright-blue);">
+                        <td>
+                            Hours
+                        </td>
+                        <td>
+                            Courses
+                        </td>
+                    </tr>
+                    <tr style="color: var(--bright-blue);">
+                        <td>
+                            <%= current_hours %> 
+                        </td>
+                        <td>
+                            <%= classes.length %>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        </div>
 
         <div id="add_reading" onclick="openGPAForm()">
             Add Class GPA
         </div>
 
 
-        <script src="planner.js"></script>
-        <script src="course.js"></script>
+        <script src="gpacalc.js"></script>
     </body>
 </html>

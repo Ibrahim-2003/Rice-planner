@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <link  rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body style="margin: 0;">
+        <div id="header">
+            <header id="title">Rice Planner - Ibrahim Al-Akash</header>
+        </div>
+
+        <div class="topnav">
+            <a href="/" style="display: flex; align-items: center; justify-content: center;"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
+            <a class="active" href="/admin">Admin</a>
+            <a href="/course_reqs">Saved Courses</a>
+            <a id="add_course" onclick="openCourseForm()" style="display: flex; align-items: center; justify-content: center;cursor: pointer;">
+                <span class="material-icons" style="margin-right: 5px; font-size: 18px;">add_circle_outline</span>
+                  Add Course
+            </a>
+        </div>
+
+          <div id="add_gpa_form">
+            <div id="x_btn_cont">
+              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeGPAForm()">
+            </div>
+            <form id="formipler" action="/add_coursedb" method="POST">
+              <div style="grid-column: span 2;">
+                <label for="grading_item" style="display: block;">Grading Item</label>
+                <input name="grading_item" style="display: block; margin: auto; margin-top: 25px; padding: 0; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="weightpts">Weight (points)</label>
+                <input name="weightpts" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="weightperc">Weight (%)</label>
+                <input name="weightperc" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+              </div>
+              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+            </form>
+          </div>
+
+        <div id="add_reading" onclick="openGPAForm()">
+            Add Course to DB
+        </div>
+
+
+        <script src="planner.js"></script>
+        <script src="course.js"></script>
+    </body>
+</html>
