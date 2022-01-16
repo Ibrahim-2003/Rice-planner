@@ -193,6 +193,7 @@ body{
   /* Style the add course button */
   #add_course {
     float: right;
+    font-size: 14px;
   }
 
   /* Add course form block */
@@ -401,7 +402,7 @@ p{
   padding: 14px 16px;
   text-decoration: none;
   font-family: 'SF Pro Display';
-  font-size: 17px;
+  font-size: 16px;
   transition: 0.3s;
 }
 

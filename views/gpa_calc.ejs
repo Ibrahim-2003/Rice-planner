@@ -21,7 +21,7 @@
         </div>
 
         <div class="topnav">
-            <a href="/" style="display: flex; align-items: center; justify-content: center;"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
+            <a href="/" style="display: flex; align-items: center; justify-content: center; padding: 13px"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
             <% for (course of classes) {%>
                 <a href="/course?name=<%= course.name %>" onclick="hideAll()"><%= course.name %></a>
             <% } %>

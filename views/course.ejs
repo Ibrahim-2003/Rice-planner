@@ -16,7 +16,7 @@
         </div>
 
         <div class="topnav">
-            <a href="/" style="display: flex; align-items: center; justify-content: center;"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
+            <a href="/" style="display: flex; align-items: center; justify-content: center; padding: 10px;"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
             <% for (cours of classes) {%>
                 <% if(cours.name == active_course) {%>
                     <a class="active" href="/course?name=<%= cours.name %>"><%= cours.name %></a>
