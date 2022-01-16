@@ -174,7 +174,8 @@ app.post('/add_reading/:course_id', async function(req,res){
         link: req.body.link,
         due_date: new Date(req.body.date),
         assigned_reading: req.body.reading_name,
-        description: req.body.description
+        description: req.body.description,
+        status: 'incomplete'
     }
     await makeQuery(query, vals);
     res.redirect(`/course?name=${req.params.course_id.split('-')[1]}`);
@@ -246,12 +247,12 @@ app.post('/incomplete', async function(req,res){
 })
 
 app.get('/gpa', async function(req,res){
-    var classes = await makeQuery('SELECT * FROM classes', '');
-    var assignments = await makeQuery('SELECT * FROM assignments');
-    var readings = await makeQuery('SELECT * FROM readings');
+    var classes = await makeQuery('SELECT * FROM classes');
+    var gradingscheme = await makeQuery('SELECT * FROM gradingscheme');
+    var graded = await makeQuery('SELECT * FROM graded_assignments');
     res.render('gpa_calc.ejs', {classes: classes,
-                            readings: readings,
-                            assignments: assignments});
+                            guidelines: gradingscheme,
+                            graded: graded});
 })
 
 
