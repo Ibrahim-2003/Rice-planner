@@ -154,6 +154,8 @@ CREATE TABLE `graded_assignments` (
   `maximum` float DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `grading_id` varchar(255) DEFAULT NULL,
+  `class_id` int DEFAULT NULL,
+  `assignment_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`graded_id`),
   UNIQUE KEY `graded_id_UNIQUE` (`graded_id`),
   UNIQUE KEY `assignment_id_UNIQUE` (`assignment_id`)
@@ -166,7 +168,7 @@ CREATE TABLE `graded_assignments` (
 
 LOCK TABLES `graded_assignments` WRITE;
 /*!40000 ALTER TABLE `graded_assignments` DISABLE KEYS */;
-INSERT INTO `graded_assignments` VALUES (3,18,5,5,'Attendance','1'),(4,17,10,10,'Quizzes','8'),(6,14,10,10,'','8'),(7,19,10,10,'','11'),(8,8,1,1,'','2'),(9,20,1,1,'','2');
+INSERT INTO `graded_assignments` VALUES (3,18,5,5,'Attendance','1',12,'Attendance'),(4,17,10,10,'Quizzes','8',21,'Quiz 0.0'),(6,14,10,10,'Quizzes','8',21,'Quiz 0.1'),(7,19,10,10,'RLA Attendance','11',21,'RLA Participation Week 1'),(8,8,1,1,'Homework - Online','2',12,'Dot Product Worksheet'),(9,20,1,1,'Homework - Online','2',12,'Cross Product Worksheet');
 /*!40000 ALTER TABLE `graded_assignments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,4 +240,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-16 15:41:42
+-- Dump completed on 2022-01-16 20:39:18
