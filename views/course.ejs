@@ -397,6 +397,87 @@
             </div>
 
             <div id='<%= active_course %>grade' class="inner_content">
+              <div id="cum" style="align-items: center; justify-content: center; margin: 0; padding: 0;">
+                <div id="gpa_table_cont">
+                    <table class="gpa_table" id="cum_table">
+                        <tr>
+                            <th colspan="4">Grades<span class="material-icons" style="margin:auto; margin-left: 15px; font-size: 18px; align-self: center; cursor: pointer;" onclick="window.print();return false;">print</span></th>
+                        </tr>
+                        <tr style="font-style: italic; font-weight: 900;border-top: 1px solid var(--rice-blue); border-bottom: 1px solid var(--rice-blue); padding: 10px 0;">
+                            <td>
+                                Assignment
+                            </td>
+                            <td>
+                                Type
+                            </td>
+                            <td>
+                                Grade (pts)
+                            </td>
+                            <td>
+                                Grade (%)
+                            </td>
+                        </tr>
+                        <% for(ass of graded) {%>
+                            <% if (ass.class_id == course[0].class_id) {%> 
+                            <tr>
+                                <td>
+                                    <%= ass?.assignment_name %> 
+                                </td>
+                                <td>
+                                    <%= ass?.type %> 
+                                </td>
+                                <td>
+                                    <%= ass?.grade %>/<%= ass?.maximum %> 
+                                </td>
+                                <td>
+                                    <%= ((ass?.grade/ass?.maximum) * 100).toFixed(0) %>% 
+                                </td>
+                            </tr>
+                          <% } %> 
+                        <% } %> 
+                        <tr style="font-style: italic; font-weight: 900; border-top: 1px solid var(--rice-blue); border-bottom: 1px solid var(--rice-blue); padding: 10px 0;">
+                            <td colspan="2">
+                                Syllabus Item
+                            </td>
+                            <td>
+                              Grade
+                            </td>
+                            <td>
+                              Weight
+                            </td>
+                        </tr>
+                        <% for (i in syllabus) {%>
+                          <tr>
+                            <td colspan="2">
+                                <%= syllabus[i].grading_item %> 
+                            </td>
+                            <td>
+                              <%= breakdown[i] %>%
+                            </td>
+                            <td>
+                              <% if (syllabus[i].weight_percentage > 0) {%>
+                                <%= syllabus[i].weight_percentage %>%
+                              <% }else if (syllabus[i].weight_points > 0) {%>
+                                <%= syllabus[i].weight_points %> 
+                              <% } %>  
+                            </td>
+                        </tr>
+                        <% } %>
+                        <tr style="border-top: 1px solid var(--rice-blue); border-bottom: 1px solid var(--rice-blue); padding: 10px 0;">
+                          <td colspan="2">
+                              Course Grade
+                          </td>
+                          <td>
+                            <%= course_grade %>%
+                          </td>
+                          <td>
+                            <%= course_letter %> 
+                          </td>
+                      </tr>
+                    </table>
+                </div>
+              </div>
+
                 <div style="display: flex; justify-content: space-evenly; align-items: center;">
                     <div id="add_reading" onclick="openGradeschemeForm()">
                         Add Syllabus Item

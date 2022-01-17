@@ -7,6 +7,7 @@ const { join, resolve } = require("path");
 const mysql = require("mysql");
 var bodyParser = require('body-parser');
 const { append } = require('express/lib/response');
+const { range } = require('express/lib/request');
 
 const sample_account = {
     account_id: 1,
@@ -27,6 +28,18 @@ const gpa_scale = {
     'C+': 2.3333,
     'C': 2.0,
     'C-': 1.6667
+}
+
+const letter_scale = {
+    'A+': 96,
+    'A': 92,
+    'A-': 89,
+    'B+': 86,
+    'B': 82,
+    'B-': 79,
+    'C+': 76,
+    'C': 72,
+    'C-': 69
 }
 
 const tmdas_scale = {
@@ -131,6 +144,21 @@ app.get('/', async function(req, res) {
                             assignments: assignments});
 })
 
+function findPerc(scores, max_scores){
+    var sum_scores = scores.reduce((a, b) => a + b, 0);
+    var sum_max = max_scores.reduce((a, b) => a + b, 0);
+    var perc = sum_scores / sum_max * 100;
+    return perc;
+}
+
+function percGrade(scores,weights){
+    var score = 0;
+    for (i in scores){
+        score = score + (scores[i]/100 * weights[i]);
+    }
+    return score;
+}
+
 app.get('/course', async function(req, res) {
     try {
         // console.log(req.query.name)
@@ -143,13 +171,96 @@ app.get('/course', async function(req, res) {
         // console.log(readings)
         var gradingscheme = await makeQuery('SELECT * FROM gradingscheme WHERE class_id=?', `${course_id}`);
         var graded = await makeQuery('SELECT * FROM graded_assignments');
+
+        var course_grade;
+
+        var assignment_types = [];
+        var weighting = [];
+        var method = -1;
+        for (s of gradingscheme){
+            if(s.class_id == course_id && s.weight_points > 0){
+                assignment_types.push(s.grading_item);
+                weighting.push(s.weight_points);
+                method = 0;
+            }else if(s.class_id == course_id && s.weight_percentage > 0){
+                assignment_types.push(s.grading_item);
+                weighting.push(s.weight_percentage);
+                method = 1;
+            }
+        }
+
+        var asses = [];
+
+        if(method == 1){
+            for (ass of graded){
+                for (s of assignment_types){
+                    if (ass.type == s){
+                        asses.push([ass.grade, ass.maximum, ass.type]);
+                    }
+                }
+            }
+        }
+
+        // If the grading scheme is on a percentage basis
+        if(method == 1){
+            var scores = [];
+            var max_scores = [];
+            var breakdown = [];
+            for (s of assignment_types){
+                scores = [];
+                max_scores = [];
+                for (ass of asses){
+                    if(ass[2] == s){
+                        scores.push(ass[0]);
+                        max_scores.push(ass[1]);
+                    }
+                }
+                var typescore = findPerc(scores,max_scores);
+                if(isNaN(typescore)) typescore = 0;
+                breakdown.push(typescore);
+            }
+            var course_grade = percGrade(breakdown,weighting);
+            var syl_break = [];
+            for (i in breakdown){
+                var we = weighting[i];
+                syl_break.push([we, breakdown]);
+            }
+        }
+
+        var course_letter;
+
+        if (course_grade > letter_scale['A+']){
+            course_letter = 'A+';
+        }else if(course_grade > letter_scale['A']){
+            course_letter = 'A';
+        }else if(course_grade > letter_scale['A-']){
+            course_letter = 'A-';
+        }else if(course_grade > letter_scale['B+']){
+            course_letter = 'B+';
+        }else if(course_grade > letter_scale['B']){
+            course_letter = 'B';
+        }else if(course_grade > letter_scale['B-']){
+            course_letter = 'B-';
+        }else if(course_grade > letter_scale['C+']){
+            course_letter = 'C+';
+        }else if(course_grade > letter_scale['C']){
+            course_letter = 'C';
+        }else {
+            course_letter = 'C-';
+        }
+        
+
+
         res.render('course.ejs', {classes: classes,
                                     active_course: req.query.name,
                                     course: blip,
                                     assignments: assignments,
                                     readings: readings,
                                     syllabus: gradingscheme,
-                                    graded: graded});
+                                    graded: graded,
+                                    course_grade: course_grade,
+                                    breakdown: breakdown,
+                                    course_letter: course_letter});
     } catch (e) {
         console.error(e);
     }
@@ -240,7 +351,9 @@ app.post('/add_graded/:course_id', async function(req,res){
         assignment_id: assignment_id,
         grade: score,
         maximum: max,
-        type: grading_type
+        type: grading_type,
+        class_id: course_id,
+        assignment_name: assignment_name
     };
 
     await makeQuery(query, vals);
