@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <link  rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <!-- <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+        </script> -->
+        <script src="https://cdn.plot.ly/plotly-2.8.3.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js'></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body style="margin: 0;">
+        <div id="header">
+            <header id="title">Rice Planner - Ibrahim Al-Akash</header>
+        </div>
+
+        <div class="topnav">
+            <a href="/" style="display: flex; align-items: center; justify-content: center; padding: 13px;"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
+            <a href="/admin">Admin</a>
+            <a class="active" href="/course_reqs">Saved Courses</a>
+            <a id="add_course" onclick="openCourseForm()" style="display: flex; align-items: center; justify-content: center;cursor: pointer;">
+                <span class="material-icons" style="margin-right: 5px; font-size: 18px;">add_circle_outline</span>
+                  Add Course
+            </a>
+        </div>
+
+        <div id="add_course_form">
+            <div id="x_btn_cont">
+              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeCourseForm()">
+            </div>
+            <form id="formiple" action="/add_course" enctype="multipart/form-data" method="POST">
+              <div style="grid-column: span 2;">
+                <label for="course_name" style="display: block;">Course Name</label>
+                <input name="course_name" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="hours">Hours</label>
+                <input name="hours" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px; margin-right: 5px;" type="number">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="professor">Professor</label>
+                <input name="professor" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 2">
+                <label for="syllabus">Syllabus</label>
+                <input name="syllabus" style="display: block; margin: 10px;" type="file">
+              </div>
+              <div style="grid-column: span 2">
+                <label for="semester">Semester</label>
+                <select id="semester" name="semester" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
+                  <option value="F21">Fall '21</option>
+                  <option value="S22">Spring '22</option>
+                  <option value="F22">Fall '22</option>
+                  <option value="S23">Spring '23</option>
+                  <option value="F23">Fall '23</option>
+                  <option value="S24">Spring '24</option>
+                  <option value="F24">Fall '24</option>
+                  <option value="S25">Spring '25</option>
+                </select>
+              </div>
+              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+            </form>
+          </div>
+
+          <div id="add_gpa_form">
+            <div id="x_btn_cont">
+              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeGPAForm()">
+            </div>
+            <form id="formipler" action="/add_course_gpa" method="POST">
+              <div style="grid-column: span 2;">
+                <label for="course_name" style="display: block;">Course Name</label>
+                <input name="course_name" style="display: block; margin: auto; margin-top: 25px; padding: 0; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="hours">Hours</label>
+                <input name="hours" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="grade">Letter Grade</label>
+                <select id="grade" name="grade" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 18px;">
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="B-">B-</option>
+                    <option value="C+">C+</option>
+                    <option value="C">C</option>
+                    <option value="C-">C-</option>
+                </select>
+              </div>
+              <div style="grid-column: span 2">
+                <label for="gpa_semester">Semester</label>
+                <select id="gpa_semester" name="gpa_semester" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
+                  <option value="F21">Fall '21</option>
+                  <option value="S22">Spring '22</option>
+                  <option value="F22">Fall '22</option>
+                  <option value="S23">Spring '23</option>
+                  <option value="F23">Fall '23</option>
+                  <option value="S24">Spring '24</option>
+                  <option value="F24">Fall '24</option>
+                  <option value="S25">Spring '25</option>
+                </select>
+              </div>
+              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+            </form>
+          </div>
+
+          <div class="tabcontent">
+            <div class="inner_tab">
+                <button class="inner_tablinks" onclick="openInnerCity(event, `desired`)" style="display: flex; align-items: center; justify-content: center;">
+                  <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">checklist</span>
+                  Select Desired Courses
+                </button>
+                <button class="inner_tablinks" onclick="openInnerCity(event, `reqs`)" style="display: flex; align-items: center; justify-content: center;">
+                  <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">check</span>
+                  Degree Requirements
+                </button>
+                <button class="inner_tablinks" onclick="openInnerCity(event, `sem`)" style="display: flex; align-items: center; justify-content: center;">
+                  <span class="material-icons" style="margin:auto; margin-right: 5px; font-size: 18px; align-self: center;">view_timeline</span>
+                  Semester Breakdown
+                </button>
+              </div>
+          </div>
+          
+    
+        <div id="desired" class="inner_content" style="align-items: center; justify-content: center; margin: 0; padding: 0;">
+            JHSIUS
+        </div>
+
+        <div id="reqs" class="inner_content" style="align-items: center; justify-content: center; margin: 0; padding: 0;">
+            KJKLJ
+        </div>
+
+        <div id="sem" class="inner_content" style="align-items: center; justify-content: center; margin: 0; padding: 0;">
+            ODKOJDP
+        </div>
+
+
+        <script src="course_reqs.js"></script>
+    </body>
+</html>

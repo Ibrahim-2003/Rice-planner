@@ -8,6 +8,7 @@ const mysql = require("mysql");
 var bodyParser = require('body-parser');
 const { append } = require('express/lib/response');
 const { range } = require('express/lib/request');
+const { query } = require('express');
 
 const sample_account = {
     account_id: 1,
@@ -646,9 +647,49 @@ app.post('/add_course_gpa', async function(req,res){
 app.get('/admin', (req,res) => {
     res.render('admin.ejs');
 })
+app.get('/course_reqs', (req,res) => {
+    res.render('course_reqs.ejs');
+})
 
 app.post('/add_coursedb', async function(req,res){
     const course_name = req.body.course_name;
+    const hours = req.body.hours;
+    const code = req.body.code;
+    const dept_code = code.split(' ')[0];
+    const level_code = parseInt(code.split(' ')[1]);
+    const desc = req.body.description;
+    const dist = req.body.distribution;
+    var is_core_req = req.body.core_req;
+    if(is_core_req == undefined){
+        is_core_req = 0;
+    }else{
+        is_core_req = 1;
+    }
+    var prereq = req.body.prereq;
+    if(prereq == undefined){
+        prereq = 0;
+    }
+
+    var query = `INSERT INTO course_db SET ?`;
+
+    var vals = {
+        name: course_name,
+        hours: hours,
+        dept_code: dept_code,
+        level_code: level_code,
+        description: desc,
+        distribution: dist,
+        is_bioe_req: is_bioe_req,
+        is_engi_req: is_engi_req,
+        is_core_req: is_core_req,
+        prereq: prereq
+    }
+
+    console.log(vals);
+
+    await makeQuery(query, vals);
+    res.redirect('/admin');
+
 })
 
 

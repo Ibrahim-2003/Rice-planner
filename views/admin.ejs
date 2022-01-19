@@ -16,7 +16,7 @@
         </div>
 
         <div class="topnav">
-            <a href="/" style="display: flex; align-items: center; justify-content: center;"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
+            <a href="/" style="display: flex; align-items: center; justify-content: center; padding: 13px;"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
             <a class="active" href="/admin">Admin</a>
             <a href="/course_reqs">Saved Courses</a>
             <a id="add_course" onclick="openCourseForm()" style="display: flex; align-items: center; justify-content: center;cursor: pointer;">
@@ -25,25 +25,46 @@
             </a>
         </div>
 
-          <div id="add_gpa_form">
-            <div id="x_btn_cont">
-              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeGPAForm()">
-            </div>
-            <form id="formipler" action="/add_coursedb" method="POST">
-              <div style="grid-column: span 2;">
-                <label for="grading_item" style="display: block;">Grading Item</label>
-                <input name="grading_item" style="display: block; margin: auto; margin-top: 25px; padding: 0; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+          <div id="add_gpa_form" style="top: 55%; margin: 5px;">
+              <div id="x_btn_cont">
+                <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeGPAForm()">
               </div>
-              <div style="grid-column: span 1">
-                <label for="weightpts">Weight (points)</label>
-                <input name="weightpts" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
-              </div>
-              <div style="grid-column: span 1">
-                <label for="weightperc">Weight (%)</label>
-                <input name="weightperc" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
-              </div>
-              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
-            </form>
+              <form id="formiple" action="/add_coursedb" method="POST" style="margin: 2px;">
+                <div style="grid-column: span 2;">
+                  <label for="course_name" style="display: block;">Course Name</label>
+                  <input name="course_name" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+                </div>
+                <div style="grid-column: span 1">
+                  <label for="hours">Hours</label>
+                  <input name="hours" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px; margin-right: 5px;" type="number">
+                </div>
+                <div style="grid-column: span 1">
+                  <label for="code">Course Code</label>
+                  <input name="code" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text" placeholder="ABCD 123">
+                </div>
+                <div style="grid-column: span 2">
+                  <label for="description">Description</label>
+                  <input name="description" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+                </div>
+                <div style="grid-column: span 1">
+                  <label for="distribution">Distribution</label>
+                  <select name="distribution" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
+                    <option value="0">None</option>
+                    <option value="1">Dist I</option>
+                    <option value="2">Dist II</option>
+                    <option value="3">Dist III</option>
+                  </select>
+                </div>
+                <div style="grid-column: span 1;">
+                  <input id="core_req" name="core_req" type="checkbox" style="margin: auto; margin-top: 20px; margin-bottom: 20px; font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px; margin-left: 10px;">
+                  <label for="core_req" style="font-size: 18px; font-weight: normal; font-style: normal; -moz-user-select: -moz-none;-webkit-user-select: none;">RICE</label>
+                </div>
+                <div style="grid-column: span 2;">
+                  <label for="prereq">Prerequisites</label>
+                  <input name="prereq" style="display: block; margin: auto; margin-top: 10px; margin-bottom: 10px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text" placeholder="ex: 'ENGI 120,ENGI 200,ENGI 210'">
+                </div>
+                <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+              </form>
           </div>
 
         <div id="add_reading" onclick="openGPAForm()">
@@ -53,5 +74,15 @@
 
         <script src="planner.js"></script>
         <script src="course.js"></script>
+        <script>
+          function check(element){
+            const checkbox = document.getElementById(element);
+            if(checkbox.checked == true){
+              checkbox.checked = false;
+            }else{
+              checkbox.checked = true;
+            }
+          }
+        </script>
     </body>
 </html>
