@@ -124,7 +124,11 @@
                   <span class="material-icons" style="font-size: 48px; color: var(--warm-yellow);cursor: pointer;" onclick="markReadingComplete('<%= reading.readings_id %>')">new_releases</span>
                   <div style="display: block; margin: 10px;">
                     <h2 style="color: white;"><%= reading.assigned_reading %> </h2>
-                    <h3 style="color: var(--light-gray); font-size: 14px;"><%= reading.due_date.toDateString() %></h3>
+                    <% for (course of classes) {%>
+                      <% if (course.class_id == reading.class_id) {%>
+                        <h3 style="color: var(--light-gray); font-size: 14px;"><%= course.name %></h3>
+                      <% } %>  
+                    <% } %> 
                     <% now = new Date(); time = new Date(reading.due_date) %> 
                     <% var delta = (time - now) / 1000; %>
                     <% var days_until = Math.floor(delta / 86400); delta -= days_until * 86400; %>
