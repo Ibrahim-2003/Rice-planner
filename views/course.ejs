@@ -240,6 +240,13 @@
                 <div style="display: block; margin: 10px;">
                     <h2 style="color: white;"><%= reading.assigned_reading %> </h2>
                     <h3 style="color: var(--light-gray); font-size: 14px;"><%= reading.due_date.toDateString() %></h3>
+                    <% now = new Date(); time = new Date(reading.due_date) %> 
+                    <% var delta = (time - now) / 1000; %>
+                    <% var days_until = Math.floor(delta / 86400); delta -= days_until * 86400; %>
+                    <% var hours_until = Math.floor(delta / 3600) % 24; delta -= hours_until * 3600;%>
+                    <% if (days_until >= 0 && reading.status != "complete"){%> 
+                    <h3 style="color: var(--light-gray); font-size: 14px;"><%= days_until %> Days and <%= hours_until %> Hours until due</h3>
+                    <% } %> 
                     <p style="text-align: center; color: var(--bright-blue);"><%= reading.description %> </p>
                 </div>
                 <a style="text-decoration: none; color: var(--bright-green); font-size: 26px; display: flex; align-items: center; justify-content: center;" href="<%= reading.link %> " target="_blank">
@@ -273,8 +280,15 @@
                             <div style="display: block; margin: 10px;">
                                 <h2 style="color: white;"><%= assignment.name %> </h2>
                                 <% time = new Date(assignment.due_date) %>
+                                <% now = new Date() %> 
+                                <% var delta = (time - now) / 1000; %>
+                                <% var days_until = Math.floor(delta / 86400); delta -= days_until * 86400; %>
+                                <% var hours_until = Math.floor(delta / 3600) % 24; delta -= hours_until * 3600;%>
                                 <% time = time.toLocaleString() %>
                                 <h3 style="color: var(--light-gray); font-size: 14px;"><%= time %></h3>
+                                <% if (days_until >= 0 && assignment.status != "complete"){%> 
+                                <h3 style="color: var(--light-gray); font-size: 14px;"><%= days_until %> Days and <%= hours_until %> Hours until due</h3>
+                                <% } %> 
                                 <p style="text-align: center; color: var(--bright-blue);"><%= assignment.description %> </p>
                             </div>
                             <a style="text-decoration: none; color: var(--bright-green); font-size: 26px; display: flex; align-items: center; justify-content: center;" href="<%= assignment.link %> " target="_blank">

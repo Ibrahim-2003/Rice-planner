@@ -128,6 +128,7 @@ body{
     width: 100%;
     margin: 0;
     background-color: var(--dark-gray);
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
   }
   
   /* Style the buttons that are used to open the tab content */
@@ -561,3 +562,87 @@ td{
   font-size: 26px;
   font-weight: bold;
 }
+
+#todoOpenReading{
+  display: none;
+}
+
+#todoOpenAss{
+  display: none;
+}
+
+.todoBtn{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+  cursor: pointer;
+  position: absolute;
+  top: 20%;
+  right: 5%;
+  transform: translate(-20%, 5%);
+  background-color: var(--rice-blue);
+  border-radius: 50%;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.todoCont{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+  cursor: pointer;
+  background-color: var(--midnight-blue);
+  text-align: center;
+  margin: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  width: fit-content;
+  padding: 5px;
+}
+
+#openAssHide{
+  display: none;
+}
+
+#openReadHide{
+  display: none;
+}
+
+#masterCont{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scrollable{
+  height: 500px;
+  margin: 0px 20px;
+  overflow-y: scroll;
+}
+
+.scrollable:first-of-type{
+  margin: 50px 20px;
+}
+
+#readScroll{
+  display: none;
+}
+
+#assScroll{
+  display: none;
+}
+
