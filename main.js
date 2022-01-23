@@ -138,8 +138,8 @@ makeQuery = function(query,vals){
 
 app.get('/', async function(req, res) {
     var classes = await makeQuery('SELECT * FROM classes', '');
-    var assignments = await makeQuery('SELECT * FROM assignments');
-    var readings = await makeQuery('SELECT * FROM readings');
+    var assignments = await makeQuery('SELECT * FROM assignments ORDER BY due_date ASC');
+    var readings = await makeQuery('SELECT * FROM readings ORDER BY due_date ASC');
     res.render('home.ejs', {classes: classes,
                             readings: readings,
                             assignments: assignments});

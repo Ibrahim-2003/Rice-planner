@@ -260,6 +260,9 @@
             </div>
 
             <div id='<%= active_course %>problems' class="inner_content">
+              <div id="add_reading" onclick="openAssignmentForm()">
+                Add Assignment
+              </div>
                 <% for(assignment of assignments){%>
                     <% if(assignment.assignment_type == 'problemset'){ %>
                         <div class="reading_block">
@@ -297,9 +300,6 @@
                         </div>
                     <% } %>  
                 <% } %>
-                <div id="add_reading" onclick="openAssignmentForm()">
-                    Add Assignment
-                </div>
             </div>
             
             <div id='<%= active_course %>other' class="inner_content">
