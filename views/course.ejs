@@ -230,6 +230,9 @@
                 </div>
             </div>
             <div id='<%= active_course %>readings' class="inner_content">
+              <div id="add_reading" onclick="openReadingForm()">
+                Add Reading
+              </div>
             <% for (reading of readings) {%>
             <div class="reading_block">
                 <% if(reading.status != 'complete') {%>
@@ -254,9 +257,6 @@
                 </a>
             </div>
             <% } %>
-            <div id="add_reading" onclick="openReadingForm()">
-                Add Reading
-            </div>
             </div>
 
             <div id='<%= active_course %>problems' class="inner_content">
