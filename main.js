@@ -448,6 +448,7 @@ app.post('/incomplete', async function(req,res){
 app.get('/gpa', async function(req,res){
     var classes = await makeQuery('SELECT * FROM classes');
     var temp = []
+    const gps = await makeQuery('SELECT * FROM gpa');
     var cum = await makeQuery('SELECT * FROM gpa');
     for (c of cum){
         for (x of classes){
@@ -624,7 +625,8 @@ app.get('/gpa', async function(req,res){
                             tmdsas_grade: tmdsas_grade,
                             amcas_grade: amcas_grade,
                             sem_gpas: sem_gpas,
-                            trend: trend});
+                            trend: trend,
+                            gps: gps});
 })
 
 app.post('/add_course_gpa', async function(req,res){
@@ -639,6 +641,26 @@ app.post('/add_course_gpa', async function(req,res){
         hours: hours,
         quality_points: quality_points,
         semester: req.body.gpa_semester
+    }
+    makeQuery(query, vals);
+    res.redirect('/gpa')
+})
+
+app.post('/update_course_gpa', async function(req,res){
+    const course_name = req.body.course_name;
+    var query = 'SELECT * FROM gpa WHERE class_name=?'
+    const hourss = await makeQuery(query, course_name);
+    const hours = hourss[0].hours;
+    const letter_grade = req.body.grade;
+    const quality_points = gpa_scale[letter_grade] * hours;
+    var query = `UPDATE gpa SET ? WHERE gpa_id=${hourss[0].gpa_id}`;
+    const semester = hourss[0].semester;
+    const vals = {
+        class_name: course_name,
+        letter: letter_grade,
+        hours: hours,
+        quality_points: quality_points,
+        semester: semester
     }
     makeQuery(query, vals);
     res.redirect('/gpa')

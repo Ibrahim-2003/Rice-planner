@@ -35,6 +35,16 @@ function openInnerCity(evt, cityName) {
     function closeGPAForm(){
     document.getElementById('add_gpa_form').style.display = "none";
     }
+  function openUpGPAForm(){
+    document.getElementById('edit_gpa_form').style.display = "flex";
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    }
+    function closeUpGPAForm(){
+    document.getElementById('edit_gpa_form').style.display = "none";
+    }
 
     function openCourseForm(){
       document.getElementById('add_course_form').style.display = "flex";

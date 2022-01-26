@@ -70,6 +70,37 @@
             </form>
           </div>
 
+          <div id="edit_gpa_form">
+            <div id="x_btn_cont">
+              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeUpGPAForm()">
+            </div>
+            <form id="formiplerx" action="/update_course_gpa" method="POST">
+              <div style="grid-column: span 2;">
+                <label for="course_name" style="display: block;">Course Name</label>
+                <select id="course_name" name="course_name" style="display: block; margin: auto; margin-top: 25px; padding: 0; margin-bottom: 25px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;" type="text">
+                    <% for (course of gps) {%>
+                        <option value="<%= course.class_name %>"><%= course.class_name %></option>
+                    <% } %> 
+                </select>
+              </div>
+              <div style="grid-column: span 2">
+                <label for="grade">Letter Grade</label>
+                <select id="grade" name="grade" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 18px;">
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="B-">B-</option>
+                    <option value="C+">C+</option>
+                    <option value="C">C</option>
+                    <option value="C-">C-</option>
+                </select>
+              </div>
+              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+            </form>
+          </div>
+
           <div id="add_gpa_form">
             <div id="x_btn_cont">
               <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeGPAForm()">
@@ -131,6 +162,7 @@
               </div>
           </div>
           
+        
     
         <div id="med" class="inner_content" style="align-items: center; justify-content: center; margin: 0; padding: 0;">
             <div id="gpa_table_cont" style="margin-right: 25px;">
@@ -319,8 +351,13 @@
             </div>
         </div>
 
-        <div id="add_reading" onclick="openGPAForm()">
-            Add Class GPA
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div id="add_reading" onclick="openGPAForm()">
+                Add Class GPA
+            </div>
+            <div id="add_reading_kodo" onclick="openUpGPAForm()">
+                Edit Class GPA
+            </div>
         </div>
 
 
