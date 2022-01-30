@@ -140,9 +140,19 @@ app.get('/', async function(req, res) {
     var classes = await makeQuery('SELECT * FROM classes', '');
     var assignments = await makeQuery('SELECT * FROM assignments ORDER BY due_date ASC');
     var readings = await makeQuery('SELECT * FROM readings ORDER BY due_date ASC');
+    var ass_count = 0;
+    for (ass of assignments){
+        if (ass.status != 'complete'){
+            ass_count = ass_count+1;
+        }
+    }
+
+
+
     res.render('home.ejs', {classes: classes,
                             readings: readings,
-                            assignments: assignments});
+                            assignments: assignments,
+                            ass_count: ass_count});
 })
 
 function findPerc(scores, max_scores){

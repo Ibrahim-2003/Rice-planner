@@ -686,3 +686,9 @@ td{
   display: none;
 }
 
+#ass_count{
+  text-align: center;
+  color: var(--rice-blue);
+  margin-top: 5px;
+  font-size: 20px;
+}
