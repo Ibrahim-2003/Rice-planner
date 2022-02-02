@@ -665,14 +665,19 @@ app.post('/update_course_gpa', async function(req,res){
     const quality_points = gpa_scale[letter_grade] * hours;
     var query = `UPDATE gpa SET ? WHERE gpa_id=${hourss[0].gpa_id}`;
     const semester = hourss[0].semester;
-    const vals = {
-        class_name: course_name,
-        letter: letter_grade,
-        hours: hours,
-        quality_points: quality_points,
-        semester: semester
+    if (letter_grade != "NULL"){
+        var vals = {
+            class_name: course_name,
+            letter: letter_grade,
+            hours: hours,
+            quality_points: quality_points,
+            semester: semester
+        }
+        makeQuery(query, vals);
+    }else{
+        var query = `UPDATE gpa SET letter = NULL WHERE gpa_id=${hourss[0].gpa_id}`;
+        makeQuery(query);
     }
-    makeQuery(query, vals);
     res.redirect('/gpa')
 })
 
