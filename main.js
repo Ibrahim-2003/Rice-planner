@@ -675,7 +675,7 @@ app.post('/update_course_gpa', async function(req,res){
         }
         makeQuery(query, vals);
     }else{
-        var query = `UPDATE gpa SET letter = NULL WHERE gpa_id=${hourss[0].gpa_id}`;
+        var query = `UPDATE gpa SET letter = NULL, quality_points = NULL WHERE gpa_id=${hourss[0].gpa_id}`;
         makeQuery(query);
     }
     res.redirect('/gpa')
