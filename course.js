@@ -121,6 +121,18 @@ function openAssignmentForm(){
     document.getElementById('add_gpa_form').style.display = "none";
     }
 
+    function openEditGradedForm(){
+      document.getElementById('edit_graded_form').style.display = "flex";
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+    }
+
+    function closeEditGradedForm(){
+      document.getElementById('edit_graded_form').style.display = "none";
+    }
+
 function markReadingComplete(reading_id){
     const current_link = window.location.href;
     submitQuery(`/complete?task=readings&link=${current_link}&item_id=${reading_id}`);

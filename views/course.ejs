@@ -158,7 +158,43 @@
             <form id="formipler" style="margin: 1px;" action="/add_graded/<%= course[0].class_id %>-<%= course[0].name %>" method="POST">
               <div style="grid-column: span 1">
                 <label for="score">Score</label>
-                <input name="score" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; margin-right: 5px; font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+                <input name="score" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; margin-right: 5px; font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number" step="any">
+              </div>
+              <div style="grid-column: span 1">
+                <label for="max_score">Max Score</label>
+                <input name="max_score" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; margin-left: 5px; font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number">
+              </div>
+              <div style="grid-column: span 2">
+                <label for="graded_assignment_name" style="display: block;">Assignment</label>
+                <select id="graded_assignment_name" name="graded_assignment_name" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
+                  <% for (x of completed_assignments) {%>
+                    <% if( x.grade > 0) {%>
+                    <% }else{%>  
+                    <option style="font-size: 14px; word-wrap: break-word;" value="<%= x.name %>-<%= x.assignment_id %> "><%= x.name %> </option>
+                    <% } %> 
+                  <% } %>
+              </select>
+              </div>
+              <div style="grid-column: span 2">
+                <label for="grading_type" style="display: block;">Assignment Type</label>
+                <select id="grading_type" name="grading_type" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
+                  <% for (x of syllabus) {%>
+                    <option style="font-size: 14px; word-wrap: break-word;" value="<%= x?.grading_item %>-<%= x?.grading_id %>"><%= x?.grading_item %> </option>
+                  <% } %>
+              </select>
+              </div>
+              <input type="submit" value="Submit" style="grid-column: span 2; margin: 10px; font-family: 'SF Pro Display'; font-weight: bold; font-size: 18px; padding: 5px; color: white; background-color: var(--rice-blue);cursor: pointer;"/>
+            </form>
+          </div>
+
+          <div id="edit_graded_form">
+            <div id="x_btn_cont">
+              <img src="https://visualpharm.com/assets/860/Close%20Window-595b40b75ba036ed117d9309.svg" id="x_btn_img" onclick="closeEditGradedForm()">
+            </div>
+            <form id="formipler" style="margin: 1px;" action="/edit_graded/<%= course[0].class_id %>-<%= course[0].name %>" method="POST">
+              <div style="grid-column: span 1">
+                <label for="score">Score</label>
+                <input name="score" style="display: block; margin: auto; margin-top: 25px; margin-bottom: 25px; margin-right: 5px; font-family: 'SF Pro Display'; font-weight: normal; font-size: 14px;" type="number" step="any">
               </div>
               <div style="grid-column: span 1">
                 <label for="max_score">Max Score</label>
@@ -169,8 +205,8 @@
                 <select id="graded_assignment_name" name="graded_assignment_name" style="display: block; margin: auto; margin-top: 20px; margin-bottom: 20px; width: 85%;font-family: 'SF Pro Display'; font-weight: normal; font-size: 16px;">
                   <% for (x of assignments) {%>
                     <% if( x.grade > 0) {%>
-                    <% }else {%>  
-                    <option style="font-size: 14px; word-wrap: break-word;" value="<%= x.name %>-<%= x.assignment_id %> "><%= x.name %> </option>
+                      <option style="font-size: 14px; word-wrap: break-word;" value="<%= x.name %>-<%= x.assignment_id %> "><%= x.name %> </option>
+                    <% }else {%>
                     <% } %> 
                   <% } %>
               </select>
@@ -466,11 +502,20 @@
                                 <%= syllabus[i].grading_item %> 
                             </td>
                             <td>
-                              <%= breakdown[i] %>%
+                              <% if (syllabus[i].weight_percentage > 0) {%>
+                                <% if(breakdown!=undefined) {%> 
+                                  <%= breakdown[i].toFixed(2) %>
+                                  <% }else{ %>
+                                    0
+                                  <% } %>
+                              <% }else if (syllabus[i].weight_points > 0) {%>
+                                <%= mypoints %> 
+                              <% } %> 
+                              
                             </td>
                             <td>
                               <% if (syllabus[i].weight_percentage > 0) {%>
-                                <%= syllabus[i].weight_percentage %>%
+                                <%= syllabus[i].weight_percentage.toFixed(2) %>%
                               <% }else if (syllabus[i].weight_points > 0) {%>
                                 <%= syllabus[i].weight_points %> 
                               <% } %>  
@@ -482,7 +527,11 @@
                               Course Grade
                           </td>
                           <td>
-                            <%= course_grade %>%
+                            <% if(course_grade != undefined) {%> 
+                            <%= course_grade.toFixed(2) %>%
+                            <% }else{ %>
+                              0
+                            <% } %>  
                           </td>
                           <td>
                             <%= course_letter %> 
@@ -495,6 +544,9 @@
                 <div style="display: flex; justify-content: space-evenly; align-items: center;">
                     <div id="add_reading" onclick="openGradeschemeForm()">
                         Add Syllabus Item
+                    </div>
+                    <div id="add_reading" onclick="openEditGradedForm()">
+                        Edit Graded Assignment
                     </div>
                     <div id="add_reading" onclick="openGradedForm()">
                         Add Graded Assignment

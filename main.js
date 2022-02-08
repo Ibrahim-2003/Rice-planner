@@ -178,6 +178,7 @@ app.get('/course', async function(req, res) {
         var course_id = blip[0].class_id;
         // console.log(blip)
         var assignments = await makeQuery('SELECT * FROM assignments WHERE class_id=? ORDER BY status DESC, due_date ASC', `${course_id}`);
+        var completed_assignments = await makeQuery('SELECT * FROM assignments WHERE (class_id=? && status=?) ORDER BY status DESC, due_date ASC', [`${course_id}`,'complete']);
         var readings = await makeQuery('SELECT * FROM readings WHERE class_id=? ORDER BY status DESC, due_date ASC', `${course_id}`);
         // console.log(readings)
         var gradingscheme = await makeQuery('SELECT * FROM gradingscheme WHERE class_id=?', `${course_id}`);
@@ -205,7 +206,15 @@ app.get('/course', async function(req, res) {
         if(method == 1){
             for (ass of graded){
                 for (s of assignment_types){
-                    if (ass.type == s){
+                    if (ass.type == s && ass.class_id == course_id){
+                        asses.push([ass.grade, ass.maximum, ass.type]);
+                    }
+                }
+            }
+        }else if(method == 0){
+            for (ass of graded){
+                for (s of assignment_types){
+                    if (ass.type == s && ass.class_id == course_id){
                         asses.push([ass.grade, ass.maximum, ass.type]);
                     }
                 }
@@ -235,6 +244,43 @@ app.get('/course', async function(req, res) {
             for (i in breakdown){
                 var we = weighting[i];
                 syl_break.push([we, breakdown]);
+            }
+            var mypoints = -1;
+        }else if(method == 0){
+            var scores = [];
+            var max_scores = [];
+            var breakdown = [];
+            for (s of assignment_types){
+                scores = [];
+                max_scores = [];
+                for (ass of asses){
+                    if(ass[2] == s){
+                        scores.push(ass[0]);
+                        max_scores.push(ass[1]);
+                    }
+                }
+                // var typescore = findPerc(scores,max_scores);
+                if(scores.length==0) scores[0] = 0;
+                breakdown.push(scores);
+            }
+            
+            var syl_break = [];
+            for (i in breakdown){
+                var we = weighting[i];
+                syl_break.push([we, breakdown]);
+            }
+            var maxpoints = 0;
+            var mypoints = 0;
+            for (i in syl_break){
+                maxpoints = maxpoints + syl_break[i][0];
+            }
+            for (i in breakdown[0]){
+                mypoints = mypoints+breakdown[0][i];
+            }
+            if(maxpoints!=0){
+                var course_grade = mypoints / maxpoints;
+            }else{
+                var course_grade = 0;
             }
         }
 
@@ -271,7 +317,9 @@ app.get('/course', async function(req, res) {
                                     graded: graded,
                                     course_grade: course_grade,
                                     breakdown: breakdown,
-                                    course_letter: course_letter});
+                                    course_letter: course_letter,
+                                    mypoints: mypoints,
+                                    completed_assignments: completed_assignments});
     } catch (e) {
         console.error(e);
     }
@@ -368,6 +416,32 @@ app.post('/add_graded/:course_id', async function(req,res){
     };
 
     await makeQuery(query, vals);
+    var query = `UPDATE assignments SET maximum=?, grade=? WHERE assignment_id=?`;
+    var vals = [max,score,assignment_id];
+    await makeQuery(query, vals);
+    res.redirect(`/course?name=${course_name}`);
+})
+
+app.post('/edit_graded/:course_id', async function(req,res){
+    const course_id = req.params.course_id.split('-')[0];
+    const course_name = req.params.course_id.split('-')[1];
+    const grading_type = req.body.grading_type.split('-')[0];
+    const grading_id = req.body.grading_type.split('-')[1];
+    const assignment_name = req.body.graded_assignment_name.split('-')[0];
+    const assignment_id = req.body.graded_assignment_name.split('-')[1];
+    const score = req.body.score;
+    const max = req.body.max_score;
+    var query = `UPDATE graded_assignments SET ? WHERE assignment_id = ?`;
+    var vals ={
+        grading_id: grading_id,
+        grade: score,
+        maximum: max,
+        type: grading_type,
+        class_id: course_id,
+        assignment_name: assignment_name
+    };
+
+    await makeQuery(query, [vals, assignment_id]);
     var query = `UPDATE assignments SET maximum=?, grade=? WHERE assignment_id=?`;
     var vals = [max,score,assignment_id];
     await makeQuery(query, vals);
