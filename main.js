@@ -278,7 +278,7 @@ app.get('/course', async function(req, res) {
                 mypoints = mypoints+breakdown[0][i];
             }
             if(maxpoints!=0){
-                var course_grade = mypoints / maxpoints;
+                var course_grade = mypoints / maxpoints*100;
             }else{
                 var course_grade = 0;
             }
@@ -404,7 +404,7 @@ app.post('/add_graded/:course_id', async function(req,res){
     const assignment_id = req.body.graded_assignment_name.split('-')[1];
     const score = req.body.score;
     const max = req.body.max_score;
-    var query = `INSERT INTO graded_assignments SET ?`;
+    var query = "INSERT INTO graded_assignments SET ?";
     var vals ={
         grading_id: grading_id,
         assignment_id: assignment_id,
