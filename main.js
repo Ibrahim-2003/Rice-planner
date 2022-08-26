@@ -147,12 +147,20 @@ app.get('/', async function(req, res) {
         }
     }
 
+    var read_count = 0;
+    for (ass of readings){
+        if (ass.status != 'complete'){
+            read_count = read_count+1;
+        }
+    }
+
 
 
     res.render('home.ejs', {classes: classes,
                             readings: readings,
                             assignments: assignments,
-                            ass_count: ass_count});
+                            ass_count: ass_count,
+                            read_count: read_count});
 })
 
 function findPerc(scores, max_scores){

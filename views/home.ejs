@@ -71,7 +71,7 @@
 
         <div id="todoOpenAss">
           <div id="ass_count">
-            <%= ass_count %> Assignments Left 
+            <%= ass_count %> <% if (ass_count == 1){ %>Assignment Left<% }else{%> Assignments Left<%}%>, <%= read_count %> <% if (read_count == 1){ %>Reading Left<% }else{%> Readings Left<%}%>
           </div>
           <div id="masterCont">
             <div class="todoCont" onclick="openAss()">
