@@ -17,6 +17,7 @@
 
         <div class="topnav" style="box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);">
             <a class="active" href="/" style="display: flex; align-items: center; justify-content: center; padding: 13px"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
+            <a href="/calendar" style="display: flex; align-items: center; justify-content: center; padding: 13px""><span class="material-icons" style="font-size: 20px; margin: auto;">calendar_month</span></a>
             <% for (course of classes) {%>
                 <a href="/course?name=<%= course.name %>" onclick="hideAll()"><%= course.name %></a>
             <% } %>
