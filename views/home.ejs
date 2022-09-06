@@ -18,9 +18,16 @@
         <div class="topnav" style="box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);">
             <a class="active" href="/" style="display: flex; align-items: center; justify-content: center; padding: 13px"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
             <a href="/calendar" style="display: flex; align-items: center; justify-content: center; padding: 13px""><span class="material-icons" style="font-size: 20px; margin: auto;">calendar_month</span></a>
-            <% for (course of classes) {%>
-                <a href="/course?name=<%= course.name %>" onclick="hideAll()"><%= course.name %></a>
-            <% } %>
+            <div class="dropdown_cont">
+              <button class="dropdown_btn">Courses
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown_classes">
+                <% for (course of classes) {%>
+                    <a href="/course?name=<%= course.name %>" onclick="hideAll()"><%= course.name %></a>
+                <% } %>
+                </div>
+            </div>
             <a href="/gpa">GPA</a>
             <a id="add_course" onclick="openCourseForm()" style="display: flex; align-items: center; justify-content: center;cursor: pointer;">
                 <span class="material-icons" style="margin-right: 5px; font-size: 18px;">add_circle_outline</span>

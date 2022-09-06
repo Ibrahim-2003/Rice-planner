@@ -130,6 +130,59 @@ body{
     background-color: var(--dark-gray);
     box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
   }
+
+  .dropdown_cont {
+    float: left;
+    overflow: hidden;
+  }
+
+  .dropdown_cont .dropdown_btn{
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    margin: 0; /* Important for vertical align on mobile phones */
+  }
+
+  .dropdown_classes {
+    display: none;
+    position: absolute;
+    background-color: var(--rice-blue);
+    flex-direction: column; /* <--- here add this line */
+    padding: 0; /* <--- this will fix the alignment */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    text-align: left;
+    z-index: 1;
+  }
+
+  #course_name_title {
+    background-color: var(--dark-gray);
+    color: white;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .dropdown_classes a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown_classes a:hover{
+    background-color: #ddd;
+  }
+
+  .dropdown_cont:hover .dropdown_classes {
+    color: var(--bright-blue);
+    display: flex;
+  }
   
   /* Style the buttons that are used to open the tab content */
   .tab button {
@@ -455,19 +508,25 @@ p{
 
 /* Style the links inside the navigation bar */
 .topnav a {
-  float: left;
+  /* float: left;
   color: white;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-family: 'SF Pro Display';
   font-size: 16px;
-  transition: 0.3s;
+  transition: 0.3s; */
+  float: left;
+  font-size: 16px;
+  color: white;
+  /* text-align: center; */
+  padding: 14px 16px;
+  text-decoration: none;
 }
 
 /* Change the color of links on hover */
-.topnav a:hover {
-  background-color: white;
+.topnav a:hover{
+  background-color: var(--light-gray);
   color: var(--rice-blue);
   transition: 0.3s;
 }
@@ -475,7 +534,7 @@ p{
 /* Add a color to the active/current link */
 .topnav a.active {
   background-color: var(--dark-gray);
-  color: white;
+  color: var(--light-gray);
 }
 
 #title{
