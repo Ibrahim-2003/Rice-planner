@@ -18,20 +18,6 @@
         <div class="topnav">
             <a href="/" style="display: flex; align-items: center; justify-content: center; padding: 13px;"><span class="material-icons" style="font-size: 20px; margin: auto;">home</span></a>
             <a href="/calendar" style="display: flex; align-items: center; justify-content: center; padding: 13px""><span class="material-icons" style="font-size: 20px; margin: auto;">calendar_month</span></a>
-            <div class="dropdown_cont">
-              <button class="dropdown_btn">Courses
-                <i class="fa fa-caret-down"></i>
-              </button>
-              <div class="dropdown_classes">
-                <% for (cours of classes) {%>
-                  <% if(cours.name == active_course) {%>
-                      <a class="active" href="/course?name=<%= cours.name %>"><%= cours.name %></a>
-                  <% }else{ %>  
-                      <a href="/course?name=<%= cours.name %>"><%= cours.name %></a>
-                  <% } %> 
-              <% } %>
-                </div>
-            </div>
             
             <a href="/gpa">GPA</a>
             <a id="add_course" onclick="openCourseForm()" style="display: flex; align-items: center; justify-content: center;cursor: pointer;">
@@ -234,7 +220,18 @@
 
           <div id="<%= active_course %>" class="tabcontent">
             <div class="inner_tab">
-
+              <div class="dropdown_cont">
+                <button class="dropdown_btn">Courses
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown_classes" style="margin-top: 47px;background-color: var(--dark-gray);">
+                  <% for (cours of classes) {%>
+                    <% if(cours.name != active_course) {%> 
+                        <a href="/course?name=<%= cours.name %>"><%= cours.name %></a>
+                    <% } %> 
+                <% } %>
+                  </div>
+              </div>
               <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>info')"><%= active_course %></button>
               <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>syllabus')">Syllabus</button>
               <button class="inner_tablinks" onclick="openInnerCity(event, '<%= active_course %>readings')">Readings</button>
