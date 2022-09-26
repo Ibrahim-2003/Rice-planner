@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 const { append } = require('express/lib/response');
 const { range } = require('express/lib/request');
 const { query } = require('express');
+const { execSync } = require('child_process');
 
 const sample_account = {
     account_id: 1,
@@ -18,6 +19,14 @@ const sample_account = {
     minor: 'Data Science, Engineering Design'
 }
 
+const fetchWebsite = (url) => {
+    execSync(`wget -q -O - ${url} > site.html`,
+      (error, stdout, stderr) => {
+        if (error !== null) {
+          return false;
+        }
+    });
+  }
 
 const gpa_scale = {
     'A+': 4.0,
@@ -182,6 +191,35 @@ app.get('/calendar', async function(req,res){
     }
 
     res.render('calendar.ejs', {classes: classes,
+        readings: readings,
+        assignments: assignments,
+        ass_count: ass_count,
+        read_count: read_count});
+})
+
+app.get('/dining', async function(req,res){
+    var classes = await makeQuery('SELECT * FROM classes', '');
+    var assignments = await makeQuery('SELECT * FROM assignments ORDER BY due_date ASC');
+    var readings = await makeQuery('SELECT * FROM readings ORDER BY due_date ASC');
+    var ass_count = 0;
+    for (ass of assignments){
+        if (ass.status != 'complete'){
+            ass_count = ass_count+1;
+        }
+    }
+
+    var read_count = 0;
+    for (ass of readings){
+        if (ass.status != 'complete'){
+            read_count = read_count+1;
+        }
+    }
+
+    fs.writeFileSync('site.html', '', () => console.log('Created site.html'));
+    fs.createReadStream('site.html').pipe(res);
+    fetchWebsite('https://dining.rice.edu/');
+
+    res.render('dining.ejs', {classes: classes,
         readings: readings,
         assignments: assignments,
         ass_count: ass_count,

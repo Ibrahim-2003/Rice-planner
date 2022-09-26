@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# ">
+  <head>
+    <meta charset="utf-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).init={ajax:{deny_list:["bam.nr-data.net"]}};(window.NREUM||(NREUM={})).loader_config={licenseKey:"be757ebc50",applicationID:"1737010280"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var i=e[n]={exports:{}};t[n][0].call(i.exports,function(e){var i=t[n][1][e];return r(i||e)},i,i.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(t,e,n){function r(){}function i(t,e,n,r){return function(){return s.recordSupportability("API/"+e+"/called"),o(t+e,[u.now()].concat(c(arguments)),n?null:this,r),n?void 0:this}}var o=t("handle"),a=t(9),c=t(10),f=t("ee").get("tracer"),u=t("loader"),s=t(4),d=NREUM;"undefined"==typeof window.newrelic&&(newrelic=d);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",v=l+"ixn-";a(p,function(t,e){d[e]=i(l,e,!0,"api")}),d.addPageAction=i(l,"addPageAction",!0),d.setCurrentRouteName=i(l,"routeName",!0),e.exports=newrelic,d.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,i="function"==typeof e;return o(v+"tracer",[u.now(),t,n],r),function(){if(f.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return e.apply(this,arguments)}catch(t){throw f.emit("fn-err",[arguments,this,t],n),t}finally{f.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=i(v,e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),s.recordSupportability("API/noticeError/called"),o("err",[t,u.now(),!1,e])}},{}],2:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],3:[function(t,e,n){var r=!1;try{var i=Object.defineProperty({},"passive",{get:function(){r=!0}});window.addEventListener("testPassive",null,i),window.removeEventListener("testPassive",null,i)}catch(o){}e.exports=function(t){return r?{passive:!0,capture:!!t}:!!t}},{}],4:[function(t,e,n){function r(t,e){var n=[a,t,{name:t},e];return o("storeMetric",n,null,"api"),n}function i(t,e){var n=[c,t,{name:t},e];return o("storeEventMetrics",n,null,"api"),n}var o=t("handle"),a="sm",c="cm";e.exports={constants:{SUPPORTABILITY_METRIC:a,CUSTOM_METRIC:c},recordSupportability:r,recordCustom:i}},{}],5:[function(t,e,n){function r(){return c.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,c=t(11);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=i},{}],6:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?l("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&l("timing",["fcp",Math.floor(t.startTime)])})}function i(t,e){var n=t.getEntries();if(n.length>0){var r=n[n.length-1];if(u&&u<r.startTime)return;var i=[r],o=a({});o&&i.push(o),l("lcp",i)}}function o(t){t.getEntries().forEach(function(t){t.hadRecentInput||l("cls",[t])})}function a(t){var e=navigator.connection||navigator.mozConnection||navigator.webkitConnection;if(e)return e.type&&(t["net-type"]=e.type),e.effectiveType&&(t["net-etype"]=e.effectiveType),e.rtt&&(t["net-rtt"]=e.rtt),e.downlink&&(t["net-dlink"]=e.downlink),t}function c(t){if(t instanceof y&&!w){var e=Math.round(t.timeStamp),n={type:t.type};a(n),e<=v.now()?n.fid=v.now()-e:e>v.offset&&e<=Date.now()?(e-=v.offset,n.fid=v.now()-e):e=v.now(),w=!0,l("timing",["fi",e,n])}}function f(t){"hidden"===t&&(u=v.now(),l("pageHide",[u]))}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var u,s,d,p,l=t("handle"),v=t("loader"),m=t(8),g=t(3),y=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){s=new PerformanceObserver(r);try{s.observe({entryTypes:["paint"]})}catch(h){}d=new PerformanceObserver(i);try{d.observe({entryTypes:["largest-contentful-paint"]})}catch(h){}p=new PerformanceObserver(o);try{p.observe({type:"layout-shift",buffered:!0})}catch(h){}}if("addEventListener"in document){var w=!1,b=["click","keydown","mousedown","pointerdown","touchstart"];b.forEach(function(t){document.addEventListener(t,c,g(!1))})}m(f)}},{}],7:[function(t,e,n){function r(t,e){if(!i)return!1;if(t!==i)return!1;if(!e)return!0;if(!o)return!1;for(var n=o.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var c=navigator.userAgent,f=c.match(a);f&&c.indexOf("Chrome")===-1&&c.indexOf("Chromium")===-1&&(i="Safari",o=f[1])}e.exports={agent:i,version:o,match:r}},{}],8:[function(t,e,n){function r(t){function e(){t(c&&document[c]?document[c]:document[o]?"hidden":"visible")}"addEventListener"in document&&a&&document.addEventListener(a,e,i(!1))}var i=t(3);e.exports=r;var o,a,c;"undefined"!=typeof document.hidden?(o="hidden",a="visibilitychange",c="visibilityState"):"undefined"!=typeof document.msHidden?(o="msHidden",a="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(o="webkitHidden",a="webkitvisibilitychange",c="webkitVisibilityState")},{}],9:[function(t,e,n){function r(t,e){var n=[],r="",o=0;for(r in t)i.call(t,r)&&(n[o]=e(r,t[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],10:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,i=n-e||0,o=Array(i<0?0:i);++r<i;)o[r]=t[e+r];return o}e.exports=r},{}],11:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function i(t){function e(t){return t&&t instanceof r?t:t?u(t,f,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){t&&a&&t(n,r,i);for(var c=e(i),f=m(n),u=f.length,s=0;s<u;s++)f[s].apply(c,r);var p=d[w[n]];return p&&p.push([b,n,r,c]),c}}function o(t,e){h[t]=m(t).concat(e)}function v(t,e){var n=h[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function m(t){return h[t]||[]}function g(t){return p[t]=p[t]||i(n)}function y(t,e){l.aborted||s(t,function(t,n){e=e||"feature",w[n]=e,e in d||(d[e]=[])})}var h={},w={},b={on:o,addEventListener:o,removeEventListener:v,emit:n,get:g,listeners:m,context:e,buffer:y,abort:c,aborted:!1};return b}function o(t){return u(t,f,a)}function a(){return new r}function c(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var f="nr@context",u=t("gos"),s=t(9),d={},p={},l=e.exports=i();e.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(i.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return t[e]=r,r}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){i.buffer([t],r),i.emit(t,e,n)}var i=t("ee").get("handle");e.exports=r,r.ee=i},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,o,function(){return i++})}var i=1,o="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!M++){var t=T.info=NREUM.info,e=m.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();f(x,function(e,n){t[e]||(t[e]=n)});var n=a();c("mark",["onload",n+T.offset],null,"api"),c("timing",["load",n]);var r=m.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=l+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function i(){"complete"===m.readyState&&o()}function o(){c("mark",["domContent",a()+T.offset],null,"api")}var a=t(5),c=t("handle"),f=t(9),u=t("ee"),s=t(7),d=t(2),p=t(3),l=d.getConfiguration("ssl")===!1?"http":"https",v=window,m=v.document,g="addEventListener",y="attachEvent",h=v.XMLHttpRequest,w=h&&h.prototype,b=!1;NREUM.o={ST:setTimeout,SI:v.setImmediate,CT:clearTimeout,XHR:h,REQ:v.Request,EV:v.Event,PR:v.Promise,MO:v.MutationObserver};var E=""+location,x={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1216.min.js"},O=h&&w&&w[g]&&!/CriOS/.test(navigator.userAgent),T=e.exports={offset:a.getLastTimestamp(),now:a,origin:E,features:{},xhrWrappable:O,userAgent:s,disabled:b};if(!b){t(1),t(6),m[g]?(m[g]("DOMContentLoaded",o,p(!1)),v[g]("load",r,p(!1))):(m[y]("onreadystatechange",i),v[y]("onload",r)),c("mark",["firstbyte",a.getLastTimestamp()],null,"api");var M=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,f,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,f],s],t)}c(n+"start",[o,a,f],s,u);try{return p=e.apply(a,o)}catch(v){throw c(n+"err",[o,a,v],s,u),v}finally{c(n+"end",[o,a,p],s,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,o(e,nrWrapper,t),nrWrapper)}function r(t,e,r,i,o){r||(r="");var c,f,u,s="-"===r.charAt(0);for(u=0;u<e.length;u++)f=e[u],c=t[f],a(c)||(t[f]=n(c,s?f+r:r,i,f,o))}function c(n,r,o,a){if(!v||e){var c=v;v=!0;try{t.emit(n,r,o,e,a)}catch(f){i([f,n,r,o],t)}v=c}}return t||(t=s),n.inPlace=r,n.flag=p,n}function i(t,e){e||(e=s);try{e.emit("internal-error",t)}catch(n){}}function o(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(o){i([o],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function c(t,e){var n=e(t);return n[p]=t,o(t,n,s),n}function f(t,e,n){var r=t[e];t[e]=c(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var s=t("ee"),d=t(10),p="nr@original",l=Object.prototype.hasOwnProperty,v=!1;e.exports=r,e.exports.wrapFunction=c,e.exports.wrapInPlace=f,e.exports.argsToArray=u},{}]},{},["loader"]);</script>
+<link rel="canonical" href="https://dining.rice.edu/" />
+<link rel="shortlink" href="https://dining.rice.edu/" />
+<meta name="description" content="Located in an urban environment on a 300-acre tree-lined campus, Rice University seizes its advantageous position to pursue pathbreaking research and create innovative collaboration opportunities that contribute to the betterment of our world." />
+<meta property="og:site_name" content="Dining | Rice University" />
+<meta property="og:url" content="https://dining.rice.edu/" />
+<meta property="og:title" content="Rice Dining" />
+<meta property="og:description" content="Located in an urban environment on a 300-acre tree-lined campus, Rice University seizes its advantageous position to pursue pathbreaking research and create innovative collaboration opportunities that contribute to the betterment of our world." />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="/sites/g/files/bxs4236/files/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="revision" href="https://dining.rice.edu/" />
+<script src="/sites/g/files/bxs4236/files/google_tag/dining_gtm/google_tag.script.js?ril8te" defer></script>
+<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};</script>
+
+    <title>Rice Dining | Dining | Rice University</title>
+    <link rel="stylesheet" media="all" href="/sites/g/files/bxs4236/files/css/css_NNhNRIt2RSO3wtEJOCelFsrr_Aba-yqOjEhjjKeExNs.css" />
+<link rel="stylesheet" media="all" href="https://pro.fontawesome.com/releases/v5.8.1/css/all.css" />
+<link rel="stylesheet" media="all" href="https://cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.css" />
+<link rel="stylesheet" media="all" href="https://cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/accessible-slick-theme.min.css" />
+<link rel="stylesheet" media="all" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+<link rel="stylesheet" media="all" href="https://cdn.jsdelivr.net/npm/plyr@3.7.2/dist/plyr.css" />
+<link rel="stylesheet" media="all" href="https://cdn.jsdelivr.net/gh/ws-rice/drupal@latest/assets/css/app.css" />
+<link rel="stylesheet" media="all" href="https://cdn.jsdelivr.net/gh/ws-rice/drupal@latest/assets/css/extra.min.css" />
+
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/631","currentPathIsAdmin":false,"isFront":true,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"ajaxPageState":{"libraries":"addtoany\/addtoany,adm_rice\/global,auto_height\/autoheight,auto_height\/initialize,ckeditor_accordion\/accordion_style,core\/html5shiv,system\/base,tooltip_taxonomy\/simple_tooltip,views\/views.module","theme":"adm_rice","theme_token":null},"ajaxTrustedUrl":[],"auto_height":{"selectors":".block"},"ckeditorAccordion":{"accordionStyle":{"collapseAll":1,"keepRowsOpen":null}},"user":{"uid":0,"permissionsHash":"c75a0a505ac635acc337a9dc5d37e2879e326b19a53fe1f4ff5bff1a44ca632e"}}</script>
+
+<!--[if lte IE 8]>
+<script src="/sites/g/files/bxs4236/files/js/js_VtafjXmRvoUgAzqzYTA3Wrjkx9wcWhjP0G4ZnnqRamA.js"></script>
+<![endif]-->
+<script src="/sites/g/files/bxs4236/files/js/js_JcZ_fb_7mDIMw3bxYcqwPTHBJLGHq32vGk3VVv2dNfc.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/focus-visible@5.2.0/dist/focus-visible.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/selectric@1.13.0/public/jquery.selectric.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/plyr@3.7.2/dist/plyr.polyfilled.min.js"></script>
+<script src="https://kit.fontawesome.com/82bd2644d5.js"></script>
+<script src="https://cdn.jsdelivr.net/combine/gh/ws-rice/drupal@latest/assets/js/app.min.js,gh/ws-rice/drupal@latest/assets/js/calendar.min.js,gh/ws-rice/drupal@latest/assets/js/events.min.js,gh/ws-rice/drupal@latest/assets/js/extras.min.js,gh/ws-rice/drupal@latest/assets/js/facts.min.js,gh/ws-rice/drupal@latest/assets/js/featured-articles.min.js,gh/ws-rice/drupal@latest/assets/js/menus.min.js,gh/ws-rice/drupal@latest/assets/js/news.min.js,gh/ws-rice/drupal@latest/assets/js/profile-news.min.js,gh/ws-rice/drupal@latest/assets/js/profiles.min.js,gh/ws-rice/drupal@latest/assets/js/related-articles.min.js"></script>
+
+  </head>
+  <body class="path-frontpage page-node-type-page">
+    <a href="#main-content" class="visually-hidden skip-to-content">
+      Skip to main content
+    </a>
+    <noscript aria-hidden="true"><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MC5SKKS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="alert bs-site-alert alert-secondary" role="alert"><p><a href="https://rice.box.com/s/lp6zqxjwvtlkl9obuy7paomisvlhnt1h" rel=" noopener" target="_blank" title="New Meal Period - Fall 2022"><strong><u>NEW MEAL PERIOD - FALL 2022</u></strong></a></p>
+</div><div class="alert bs-site-alert alert-info" role="alert"><p><a href="https://rice.box.com/s/qg2dx87pevcr9e8st923f7uqjoobl7fv" rel=" noopener" target="_blank">Dining Schedule -&nbsp;Fall 2022</a> | <a href="https://rice.box.com/s/fwmg4uht60w1e5smrjveyqzg2xcnqouo" rel=" noopener" target="_blank">Retail Dining Hours - Fall 2022</a></p>
+</div>
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+      <header class="header">
+  	<div class="header__content content-mobile">
+  		<div id="block-headercustomcss">
+  
+    
+      
+  <div>
+    <div class="visually-hidden">Body</div>
+              <div><style type="text/css">
+<!--/*--><![CDATA[/* ><!--*/
+
+.dining-menu-container {
+ margin-top: 2rem;
+}
+
+
+
+.button__text {
+font-size: 1.25em;
+font-weight: 600;
+}
+
+.alert {
+ padding: .25em;
+}
+
+form.webform-submission-form label {
+ margin-right: 1em;
+}
+
+form.webform-submission-form {
+ padding-top: 0;
+}
+
+.webform-confirmation__message {
+ padding: 4em 2em;
+ font-size: 1.5em;
+}
+
+.h1, h1 {
+ line-height: 1.5;
+ font-size: 2.5rem;
+}
+
+.page-body__content {
+ padding: 1.25% 0 1.25% !important;
+}
+
+h1.menu-title span.chef-name {
+ font-family: 'MalloryBook', sans-serif !important;
+}
+
+.menu-list .options table.menu-items {
+ font-family: 'MalloryBook', sans-serif !important;
+}
+
+.menu-list .options table.menu-items td>div.icons {
+ zoom: .5 !important;
+}
+
+.menu-list .weekly-menu .item {
+ margin-bottom: 20px !important;
+}
+
+.menu-list .item .title {
+ font-family: 'MalloryBook', sans-serif;
+ font-size: 1.25em !important;
+}
+
+/*--><!]]>*/
+</style></div>
+          </div>
+
+  </div><div id="block-homecustomcss">
+  
+    
+      
+  <div>
+    <div class="visually-hidden">Body</div>
+              <div><style type="text/css">
+<!--/*--><![CDATA[/* ><!--*/
+nav.breadcrumbs {
+ display: none;
+}
+
+.overlay__content--center {
+ display: none;
+}
+
+.overlay--extraDark {
+ display: none;
+}
+
+/*--><!]]>*/
+</style></div>
+          </div>
+
+  </div>              <div class="fl logo-container">
+          <figure class="lockup">
+
+        
+        <a class="inline-block" href="https://www.rice.edu" title="Rice University Shield"><img class="lockup__image" src="/sites/g/files/bxs4236/files/2019-08/Shield.png" alt="Shield"></a>
+
+        <div class="lockup__text">
+
+                    
+                    
+                    
+          <a class="lockup__parent" href="https://www.rice.edu" >Rice University</a>
+
+          <a class="lockup__child1" href="https://dining.rice.edu" >Dining</a>
+                  </div>
+      </figure>
+        </div>
+      
+<div class="fr menu-box">
+  <nav class="menu menu--header">
+    <button id="share-button" class="menu__share-btn menu__item button button--round button--small share-fade" title="Social Menu" >
+       <i class="button__icon button__icon--center icon icon-social"></i>
+    </button>
+    <div class="menu__share">
+      <a href="https://www.linkedin.com/edu/school?id=19472" class="button__icon-row icon icon-linkdin" tabindex="-1" title="Linked In"></a>      <a href="https://www.facebook.com/riceuniversity" class="button__icon-row icon icon-fb" tabindex="-1" title="Facebook"></a>      <a href="https://www.youtube.com/riceuniversity" class="button__icon-row icon icon-yt" tabindex="-1" title="YouTube"></a>      <a href="https://twitter.com/riceuniversity" class="button__icon-row icon icon-twitter" tabindex="-1" title="Twitter"></a>      <a href="https://instagram.com/riceuniversity" class="button__icon-row icon icon-instagram" tabindex="-1" title="Instagram"></a>          </div>
+    <button id="search-button" class="menu__search-btn menu__item button button--round button--round button--small share-fade" title="Search">
+      <i class="button__icon button__icon--center icon icon-search"></i>
+    </button>
+    <!--a id="login-button" class="share-fade menu__item button button--inline" title="Login">
+      <span class="button__text hide@s">Login</span><i class="icon icon-login"></i>
+    </a-->
+    <button id="menu-button" class="hide@m menu__item button button--inline menu-button menu-end" title="Menu" aria-expanded="false" aria-label="Open Menu" aria-controls="site-nav">
+      <span class="button__text">Menu</span><i class="icon icon-menu" aria-hidden="true"></i>
+    </button>
+    <div class="inline@m hide menu--mobile-icon tar">
+      <button id="menu-button-mobile" class="menu__item button menu-button" title="Mobile Menu">
+        <i class="icon icon-menu"></i>
+      </button>
+      <button id="close-button-mobile" class="menu__item hideim button close-button menu__close-button-mobile" title="Close">
+        <i class="icon icon-close"></i>
+      </button>
+    </div>
+  </nav>
+</div>
+<div class="menu__search">
+  <div class="search hidden-sm">
+    <form action="https://search.rice.edu" name="gs" method="get">
+      <label class="hidden" for="p">Search Form</label>
+      <input class="search-box" name="q" type="text" id="p" title="search engine" aria-label="Search Terms" size="20" maxlength="255" placeholder="Search..." tabindex="-1">
+      <button title="Search" class="search-button" type="submit" name="tab" value="Search" tabindex="-1"></button>
+      <button id="search-close" class="search-close-button" type="button" tabindex="-1"></button>
+    </form>
+  </div>
+</div>
+
+<nav role="navigation" aria-labelledby="block-mainnav-menu" id="block-mainnav">
+            
+  <h2 class="visually-hidden" id="block-mainnav-menu">Main Nav</h2>
+  
+
+        
+
+<div class="menu--nav">
+  <script>
+   (function() {
+     var cx = '014332935913219502104:djq0abwo2eq';
+     var gcse = document.createElement('script');
+     gcse.type = 'text/javascript';
+     gcse.async = true;
+     gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+     var s = document.getElementsByTagName('script')[0];
+     s.parentNode.insertBefore(gcse, s);
+   })();
+</script>
+<gcse:searchresults-only></gcse:searchresults-only>
+
+  <div class="menu--items" aria-hidden="false">
+    <button class="menu__back hide@m">&lt; back</button>
+                      <ul region="header" class="menu--main">
+                            <li class="menu menu__sub-toggle">
+                          <button aria-expanded="false" tabindex="-1">Undergraduate Dining</button>
+                                                  <ul class="menu--sub hide@m">
+                            <li class="menu__sub-items">
+                                <a href="/undergraduate-dining" tabindex="-1" data-drupal-link-system-path="node/29">Undergraduate Dining Services</a>
+                    </li>
+                                      <li class="menu__sub-items">
+                                <a href="https://dining.rice.edu/meal-plans-and-tetra" target="_blank" tabindex="-1">Meal Plans and Tetra</a>
+                    </li>
+                                      <li class="menu__sub-items">
+                                <a href="https://www.emailmeform.com/builder/form/q9pLZC859647r0Du" target="_blank" tabindex="-1">Feedback and Suggestions</a>
+                    </li>
+                        </ul>
+    
+                      </li>
+                  <li class="menu menu__sub-toggle">
+                          <button aria-expanded="false" tabindex="-1">Graduate Dining</button>
+                                                  <ul class="menu--sub hide@m">
+                            <li class="menu__sub-items">
+                                <a href="https://dining.rice.edu/graduate-dining" target="_blank" tabindex="-1">Graduate Dining</a>
+                    </li>
+                                      <li class="menu__sub-items">
+                                <a href="https://www.emailmeform.com/builder/form/q9pLZC859647r0Du" target="_blank" tabindex="-1">Feedback and Suggestions</a>
+                    </li>
+                                      <li class="menu__sub-items">
+                                <a href="https://www.emailmeform.com/builder/form/JT3dupacxaPb5bO2" target="_blank" tabindex="-1">Purchase a Plan</a>
+                    </li>
+                        </ul>
+    
+                      </li>
+                  <li class="menu menu__sub-toggle">
+                          <button aria-expanded="false" tabindex="-1">Wellness Information</button>
+                                                  <ul class="menu--sub hide@m">
+                            <li class="menu__sub-items">
+                                <a href="https://dining.rice.edu/undergraduate-dining/wellness" target="_blank" tabindex="-1">Wellness Information</a>
+                    </li>
+                        </ul>
+    
+                      </li>
+                  <li class="menu menu__sub-toggle">
+                          <button aria-expanded="false" tabindex="-1">Public Dining</button>
+                                                  <ul class="menu--sub hide@m">
+                            <li class="menu__sub-items">
+                                <a href="/public-dining" tabindex="-1" data-drupal-link-system-path="node/566">Public Dining Overview</a>
+                    </li>
+                                      <li class="menu__sub-items">
+                                <a href="/curbside" tabindex="-1" data-drupal-link-system-path="node/636">Curbside at the Club</a>
+                    </li>
+                                      <li class="menu__sub-items">
+                                <a href="https://dining.rice.edu/ambassador-chinese-cafe" target="_blank" tabindex="-1">Ambassador Chinese Café</a>
+                    </li>
+                                      <li class="menu__sub-items">
+                                <a href="/public-dining/little-kitchen-htx" tabindex="-1" data-drupal-link-system-path="node/551">Little Kitchen HTX</a>
+                    </li>
+                                      <li class="menu__sub-items">
+                                <a href="/public-dining/whoo-deli" tabindex="-1" data-drupal-link-system-path="node/556">Whoo Deli</a>
+                    </li>
+                        </ul>
+    
+                      </li>
+                  <li class="menu menu__sub-toggle">
+                          <button onclick="location.href='https://emdz.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/'" tabindex="-1">Come Work With Us!</button>
+                                  </li>
+                  <li class="menu menu__sub-toggle">
+                          <button onclick="location.href='/undergraduate-dining/contact-us'" tabindex="-1">Contact Us</button>
+                                  </li>
+                  <li class="menu menu__sub-toggle">
+                          <button onclick="location.href='/'" tabindex="-1">Home</button>
+                                  </li>
+                    </ul>
+  
+  </div>
+  <button id="close-button" class="hide@m menu__item hideim button button--inline close-button menu__close-button" title="Close">
+    <span class="button__text">Close</span><i class="icon icon-close"></i>
+  </button>
+</div>
+
+
+
+
+
+  </nav>
+<div class="menu--image" style="background-image: linear-gradient( rgba(0,0,0,.6), rgba(0,0,0,.6) ), url('/sites/g/files/bxs4236/files/styles/banner_extra_large_1600xauto/public/2020-01/Dwyer_20150118-82.jpg.jpeg?itok=ELvsGCjw');"  id="block-menubackground">
+  </div>
+
+  	</div>
+	</header>
+
+
+<main id="main-content" role="main">
+
+  
+
+    <div>
+    <div data-drupal-messages-fallback class="hidden"></div><div id="block-adm-rice-content">
+  
+    
+      <div data-history-node-id="631" role="article" about="/" class="container">
+
+  
+  
+
+      <div class="hero" >
+      <div class="hero__image image-background" style="background-image: url('/sites/g/files/bxs4236/files/styles/banner_extra_large_1600xauto/public/2020-03/dining-hero-tacos.jpg.jpeg?itok=29tBimD1');">
+        <div class="overlay overlay--extraDark">
+          <div class="hero__title overlay__content overlay__content--center">
+
+            
+            <h1>
+            <div>Rice <strong>Dining</strong></div>
+      </h1>
+          </div>
+        </div>
+
+                  <nav class="hero__breadcrumbs breadcrumbs">
+                                          <a href="/">Rice Dining</a>
+                <span class="separator">&gt;</span>
+                                                        <span>Rice Dining</span>
+                                    </nav>
+        
+      </div>
+      
+
+          </div>
+  
+      <nav class="menu menu--quick">
+          <a href="/undergraduate-dining" class="menu__item">UNDERGRADUATE DINING</a>
+          <a href="/graduate-dining" class="menu__item">GRADUATE DINING</a>
+          <a href="/public-dining" class="menu__item">PUBLIC DINING</a>
+          <a href="/undergraduate-dining/contact-us" class="menu__item">CONTACT US</a>
+          <a href="https://emdz.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/" class="menu__item">COME WORK WITH US!</a>
+      </nav>
+  
+  
+
+  
+  
+</div>
+
+  </div><div id="block-home">
+  
+    
+      <div id="block-homefoodmenublock">
+  
+    
+      
+  <div>
+    <div class="visually-hidden">Body</div>
+              <div><!-- MENU SCRIPT DO NOT REMOVE --><script defer="defer" src="https://staticws.b-cdn.net/dining/rice-dining-menu-new.js"></script></div>
+          </div>
+
+  </div><div class="views-element-container" id="block-views-block-undergraduate-serveries-page-card-grid">
+  
+    
+      <div region="home"><div class="js-view-dom-id-b8c76f409e1cdcb4855bb9a99224e21657577b75acc22893ef2d573e7d061cfb">
+  
+  
+  
+
+  
+  
+  
+  
+  <div class="container">
+  
+  
+  
+  <div class="grid-3 grid@m">
+  <div data-history-node-id="481" role="article" about="/west-servery" class="col">
+
+  
+  
+
+  
+  <div class="panel panel--featured image-zoom">
+    <div class="image-background" style="background-image: url('/sites/g/files/bxs4236/files/styles/page_hero_image/public/2019-12/west-servery_0.jpg.jpeg?itok=JC0x_3bt');"></div>
+    <a class="panel__group"  href="/west-servery-menu">
+      <div class="overlay overlay--animate">
+        <div class="panel__content overlay__content overlay__content--bottomLeft">
+          <h2>  <strong>West</strong><br />
+Servery
+</h2>
+            <span class="panel__link link">
+	<span class="link__text">VIEW MENU</span>
+</span>
+
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<div data-history-node-id="491" role="article" about="/seibel-servery" class="col">
+
+  
+  
+
+  
+  <div class="panel panel--featured image-zoom">
+    <div class="image-background" style="background-image: url('/sites/g/files/bxs4236/files/styles/page_hero_image/public/2019-12/seibel-servery.jpg.jpeg?itok=6v_-ngCG');"></div>
+    <a class="panel__group"  href="/seibel-servery">
+      <div class="overlay overlay--animate">
+        <div class="panel__content overlay__content overlay__content--bottomLeft">
+          <h2>  <strong>Seibel</strong><br />
+Servery
+</h2>
+            <span class="panel__link link">
+	<span class="link__text">VIEW MENU</span>
+</span>
+
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<div data-history-node-id="496" role="article" about="/baker-college-kitchen" class="col">
+
+  
+  
+
+  
+  <div class="panel panel--featured image-zoom">
+    <div class="image-background" style="background-image: url('/sites/g/files/bxs4236/files/styles/page_hero_image/public/2019-12/baker-servery.jpg.jpeg?itok=afyfCZPr');"></div>
+    <a class="panel__group"  href="/baker-college-kitchen">
+      <div class="overlay overlay--animate">
+        <div class="panel__content overlay__content overlay__content--bottomLeft">
+          <h2>  <strong>Baker College</strong><br />
+Kitchen
+</h2>
+            <span class="panel__link link">
+	<span class="link__text">VIEW MENU</span>
+</span>
+
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<div data-history-node-id="506" role="article" about="/south-servery" class="col">
+
+  
+  
+
+  
+  <div class="panel panel--featured image-zoom">
+    <div class="image-background" style="background-image: url('/sites/g/files/bxs4236/files/styles/page_hero_image/public/2019-12/south-servery.jpg.jpeg?itok=JVeTEsgf');"></div>
+    <a class="panel__group"  href="/south-servery">
+      <div class="overlay overlay--animate">
+        <div class="panel__content overlay__content overlay__content--bottomLeft">
+          <h2>  <strong>South</strong><br />
+Servery
+</h2>
+            <span class="panel__link link">
+	<span class="link__text">VIEW MENU</span>
+</span>
+
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<div data-history-node-id="566" role="article" about="/public-dining" class="col">
+
+  
+  
+
+  
+  <div class="panel panel--featured image-zoom">
+    <div class="image-background" style="background-image: url('/sites/g/files/bxs4236/files/styles/page_hero_image/public/2020-08/IMG_0525_1.JPG.jpeg?itok=Wzp55KLx');"></div>
+    <a class="panel__group"  href="/public-dining">
+      <div class="overlay overlay--animate">
+        <div class="panel__content overlay__content overlay__content--bottomLeft">
+          <h2>  Public
+<strong>Dining</strong>
+</h2>
+            <span class="panel__link link">
+	<span class="link__text">LEARN MORE</span>
+</span>
+
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<div data-history-node-id="646" role="article" about="/north-servery/full-week-menu" class="col">
+
+  
+  
+
+  
+  <div class="panel panel--featured image-zoom">
+    <div class="image-background" style="background-image: url('/sites/g/files/bxs4236/files/styles/page_hero_image/public/2020-08/Rice-Brown-College_0.jpg.jpeg?itok=0YsxigYZ');"></div>
+    <a class="panel__group"  href="/north-servery/full-week-menu">
+      <div class="overlay overlay--animate">
+        <div class="panel__content overlay__content overlay__content--bottomLeft">
+          <h2>  <strong>North</strong><br />
+Servery
+</h2>
+            <span class="panel__link link">
+	<span class="link__text">VIEW MENU</span>
+</span>
+
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+  </div>
+</div>
+  
+  
+
+  
+  
+
+  
+  
+</div>
+</div>
+
+  </div>
+  </div>
+  </div>
+
+
+</main>
+
+  <footer class="footer">
+    <div class="footer__content grid">
+                    <div class="tal tac@l col col-5 col@xl-3 col@ml">
+                                  <a class="footer__logo" href="https://www.rice.edu/"><img class="image-responsive" src="/sites/g/files/bxs4236/files/2019-07/Rice_University_Horizontal_Blue.svg" alt="Rice University Logo"></a>
+                </div>
+          <div class="footer--content-box col@ml footer__footer-menu">
+    <nav class="footer__menu menu menu--footer tal tac@m">
+                                      <a href="/undergraduate-dining" class="menu__item footer__menu">Undergraduate</a>
+                    <a href="/graduate-dining" class="menu__item footer__menu">Graduate</a>
+                    <a href="/public-dining" class="menu__item footer__menu">Public Dining</a>
+                  
+      <a href="#" class="menu__item fr">BACK TO TOP</a>
+    </nav>
+    
+        <hr class="hide block@ml">
+      <div class="footer__address">
+        <p>6100 Main St., Houston, TX 77005-1827 <span class="hide@s">|</span></p>
+
+<p>Mailing Address: P.O. Box 1892, Houston, TX 77251-1892 <span class="hide@s">|</span></p>
+
+<p>713-348-0000 | <a href="https://privacy.rice.edu/"><strong>Privacy Policy</strong></a> | <a href="https://rice.edu/campus-carry">Campus Carry</a></p>
+
+      </div>
+    </div>
+  
+    </div>
+  </footer>
+
+
+  </div>
+
+    
+
+    <script src="https://static.addtoany.com/menu/page.js" async></script>
+<script src="/sites/g/files/bxs4236/files/js/js_goWbnBv2j6KCHCS5pci-3f9xGv40di8YHoytHaNqDdQ.js"></script>
+
+  <script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"be757ebc50","applicationID":"1737010280","transactionName":"NFAGMEtRCBYFWxJaCw0aJQdNWQkLS0gHVAE8VgUHUVU=","queueTime":0,"applicationTime":70,"atts":"GBcFRgNLGxg=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>
