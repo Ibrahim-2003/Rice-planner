@@ -21,13 +21,13 @@ const sample_account = {
 const gpa_scale = {
     'A+': 4.0,
     'A': 4.0,
-    'A-': 3.6667,
-    'B+': 3.3333,
+    'A-': 3.67,
+    'B+': 3.33,
     'B': 3.0,
-    'B-': 2.6667,
-    'C+': 2.3333,
+    'B-': 2.67,
+    'C+': 2.33,
     'C': 2.0,
-    'C-': 1.6667
+    'C-': 1.67
 }
 
 const letter_scale = {
@@ -770,7 +770,7 @@ app.post('/update_course_gpa', async function(req,res){
     const letter_grade = req.body.grade;
     const quality_points = gpa_scale[letter_grade] * hours;
     var query = `UPDATE gpa SET ? WHERE gpa_id=${hourss[0].gpa_id}`;
-    const semester = hourss[0].semester;
+    const semester = req.body.semester;
     if (letter_grade != "NULL"){
         var vals = {
             class_name: course_name,
