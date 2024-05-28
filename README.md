@@ -1,6 +1,7 @@
 # Rice Planner
 
 This is a website I use to keep track of assignments, grades, and calculate GPAs using Rice University's guidelines, the AMCAS guidelines, and TMDSAS guidelines.
+
 ---
 ## How to run on local machine
 1) Load the ```planner_db.sql``` database into MySQL Workbench
